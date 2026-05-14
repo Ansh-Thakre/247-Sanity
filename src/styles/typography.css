@@ -1,0 +1,67 @@
+/* ------------------------------------------------
+   Typography scale & utility classes
+   Fonts: Plus Jakarta Sans (headings), Inter (body), Fira Code (numbers)
+   :where() keeps specificity at 0 so Tailwind utilities always win
+   ------------------------------------------------ */
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  color: inherit;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+:where(h1) { font-size: 3.5rem; font-weight: 700; }      /* 56px */
+:where(h2) { font-size: 2.75rem; font-weight: 700; }      /* 44px */
+:where(h3) { font-size: 2rem; font-weight: 600; }         /* 32px */
+:where(h4) { font-size: 1.5rem; font-weight: 600; }       /* 24px */
+:where(h5) { font-size: 1.25rem; font-weight: 600; }      /* 20px */
+:where(h6) { font-size: 1rem; font-weight: 600; }         /* 16px */
+
+:where(p) {
+  line-height: 1.7;
+  color: inherit;
+}
+
+/* Responsive heading scale */
+@media (max-width: 768px) {
+  :where(h1) { font-size: 2.25rem; }   /* 36px */
+  :where(h2) { font-size: 1.875rem; }  /* 30px */
+  :where(h3) { font-size: 1.5rem; }    /* 24px */
+  :where(h4) { font-size: 1.25rem; }   /* 20px */
+}
+
+/* Metric / number display — uses Fira Code */
+.font-metric {
+  font-family: var(--font-mono), monospace;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lead paragraph */
+.text-lead {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+/* Small / caption text */
+.text-caption {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* Overline label */
+.text-overline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-family: var(--font-heading), system-ui, sans-serif;
+}
+
+/* Balanced text wrapping for headings */
+:where(h1, h2, h3) {
+  text-wrap: balance;
+}
