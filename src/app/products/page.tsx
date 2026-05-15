@@ -102,7 +102,9 @@ function ProductCard({
               className="w-14 h-14 rounded-2xl flex items-center justify-center mb-7"
               style={{ backgroundColor: theme.iconBg }}
             >
-              <Icon className="w-7 h-7" style={{ color: theme.text }} />
+              <span style={{ color: theme.text }}>
+                <Icon className="w-7 h-7" />
+              </span>
             </div>
           )}
           <h3
@@ -134,7 +136,7 @@ function ProductCard({
                 className="flex items-center gap-2.5"
                 style={{ color: theme.sub, fontSize: "0.9375rem" }}
               >
-                <Check className="w-4 h-4 shrink-0" style={{ color: theme.text }} />
+                <span style={{ color: theme.text }}><Check className="w-4 h-4 shrink-0" /></span>
                 {feature}
               </li>
             ))}

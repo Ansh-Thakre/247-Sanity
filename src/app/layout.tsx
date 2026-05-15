@@ -32,8 +32,11 @@ export const metadata: Metadata = {
   description:
     "Digital growth, AI automation, SaaS & technology solutions unified into one powerful business ecosystem. Helping startups, SMEs, contractors, and enterprises scale.",
   icons: {
-    icon: "/icon-247.png",
-    apple: "/icon-247.png",
+    icon: [
+      { url: "/icon-247.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-247.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: { url: "/icon-247.png", sizes: "180x180" },
   },
 };
 

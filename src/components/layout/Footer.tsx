@@ -40,13 +40,14 @@ const footerNav = [
   },
   {
     title: "Industries",
+    nonClickable: true,
     links: [
-      { label: "Contractors", href: "/industries/contractors" },
-      { label: "Ecommerce", href: "/industries/ecommerce" },
-      { label: "Enterprise", href: "/industries/enterprise" },
-      { label: "Startups", href: "/industries/startups" },
-      { label: "SMEs", href: "/industries/sme" },
-      { label: "Professional Services", href: "/industries/professional-services" },
+      { label: "Contractors" },
+      { label: "Ecommerce" },
+      { label: "Enterprise" },
+      { label: "Startups" },
+      { label: "SMEs" },
+      { label: "Professional Services" },
     ],
   },
 ];
@@ -93,9 +94,9 @@ export function Footer() {
                 <Image
                   src="/icon-247.png"
                   alt="247 Logo"
-                  width={36}
-                  height={36}
-                  className="w-9 h-9 rounded-xl object-contain"
+                  width={44}
+                  height={44}
+                  className="w-11 h-11 rounded-xl object-contain"
                 />
                 <span className="font-heading font-bold text-lg text-white">
                   Digital <span className="text-[#3a80c8]">Pro</span>
@@ -137,13 +138,19 @@ export function Footer() {
                 </h3>
                 <ul className="space-y-2.5">
                   {group.links.map((link) => (
-                    <li key={link.href + link.label}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-white/50 hover:text-white transition-colors"
-                      >
-                        {link.label}
-                      </Link>
+                    <li key={link.label}>
+                      {"nonClickable" in group && group.nonClickable ? (
+                        <span className="text-sm text-white/50">
+                          {link.label}
+                        </span>
+                      ) : (
+                        <Link
+                          href={link.href!}
+                          className="text-sm text-white/50 hover:text-white transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -201,6 +208,17 @@ export function Footer() {
               </a>
             ))}
           </div>
+        </div>
+
+        <div className="pb-5 text-center">
+          <a
+            href="https://www.swarajyadigital.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-medium text-white/40 hover:text-white/70 transition-colors"
+          >
+            @Developed by Swarajya Digital
+          </a>
         </div>
       </Container>
     </footer>

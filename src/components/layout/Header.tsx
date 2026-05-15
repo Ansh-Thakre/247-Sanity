@@ -39,9 +39,9 @@ export function Header() {
               <Image
                 src="/icon-247.png"
                 alt="247 Logo"
-                width={36}
-                height={36}
-                className="w-9 h-9 rounded-xl object-contain"
+                width={44}
+                height={44}
+                className="w-11 h-11 rounded-xl object-contain"
                 priority
               />
               <span className="font-heading font-bold text-xl text-ink hidden sm:inline">

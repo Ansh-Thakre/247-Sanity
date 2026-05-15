@@ -16,18 +16,6 @@ export const mainNavItems: NavItem[] = [
       { label: "Social Media", href: "/services/social-media" },
     ],
   },
-  {
-    label: "Industries",
-    href: "/industries",
-    children: [
-      { label: "Contractors", href: "/industries/contractors" },
-      { label: "Ecommerce", href: "/industries/ecommerce" },
-      { label: "Enterprise", href: "/industries/enterprise" },
-      { label: "Startups", href: "/industries/startups" },
-      { label: "SMEs", href: "/industries/sme" },
-      { label: "Professional Services", href: "/industries/professional-services" },
-    ],
-  },
   { label: "Products", href: "/products" },
   { label: "Portfolio", href: "/portfolio" },
   {
