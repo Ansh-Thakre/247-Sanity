@@ -139,17 +139,17 @@ export function Footer() {
                 <ul className="space-y-2.5">
                   {group.links.map((link) => (
                     <li key={link.label}>
-                      {"nonClickable" in group && group.nonClickable ? (
-                        <span className="text-sm text-white/50">
-                          {link.label}
-                        </span>
-                      ) : (
+                      {"href" in link ? (
                         <Link
-                          href={link.href!}
+                          href={link.href}
                           className="text-sm text-white/50 hover:text-white transition-colors"
                         >
                           {link.label}
                         </Link>
+                      ) : (
+                        <span className="text-sm text-white/50">
+                          {link.label}
+                        </span>
                       )}
                     </li>
                   ))}

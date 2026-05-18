@@ -41,7 +41,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     description:
       "Custom CRM solutions to streamline sales pipelines, client management, and team collaboration.",
     icon: "users",
-    href: "/services/saas-solutions",
+    href: "/services/crm-systems",
   },
   {
     title: "Ecommerce",
