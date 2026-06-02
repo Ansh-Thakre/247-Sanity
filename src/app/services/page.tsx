@@ -2,76 +2,86 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Megaphone,
   Globe,
-  Cloud,
   Palette,
-  Bot,
-  Users,
+  Search,
+  BarChart3,
+  FileText,
 } from "lucide-react";
+import { brandVoice } from "@/config/brand";
+import { BrandCTA } from "@/components/ui/BrandCTA";
+import { serviceHeroImages } from "@/data/service-images";
 
 const services = [
   {
-    title: "Digital Marketing",
-    subtitle: "Growth Campaigns",
+    title: "Brand Strategy",
+    subtitle: "Positioning & Identity",
     description:
-      "Strategic campaigns across search, social, and content to drive measurable growth and qualified leads.",
-    icon: Megaphone,
-    href: "/services/digital-marketing",
+      "Positioning, identity, and messaging systems that differentiate you and build lasting authority.",
+    icon: Palette,
+    image: serviceHeroImages.branding,
+    href: "/services/branding",
     bg: "#1e5a98",
     iconColor: "#ffffff",
   },
   {
-    title: "Web Development",
-    subtitle: "Sites & Apps",
+    title: "Website Design",
+    subtitle: "Conversion-Focused",
     description:
-      "Custom websites, landing pages, and web applications built for performance, SEO, and conversion.",
+      "Websites designed for qualified lead generation, authority, and seamless user experience.",
     icon: Globe,
+    image: serviceHeroImages["web-development"],
     href: "/services/web-development",
     bg: "#ffffff",
     iconColor: "#1e5a98",
   },
   {
-    title: "SaaS Solutions",
-    subtitle: "Product Engineering",
+    title: "SEO Optimization",
+    subtitle: "Organic Growth",
     description:
-      "End-to-end SaaS product development from ideation to launch — CRM, ERP, and custom platforms.",
-    icon: Cloud,
-    href: "/services/saas-solutions",
-    bg: "#0f3d6e",
+      "Technical SEO, on-page strategy, and authority content that drives organic traffic.",
+    icon: Search,
+    image: serviceHeroImages.seo,
+    href: "/services/seo",
+    bg: "#0d1f3c",
     iconColor: "#ffffff",
   },
   {
-    title: "Branding",
-    subtitle: "Identity & Creative",
+    title: "Meta Ads",
+    subtitle: "Paid Social",
     description:
-      "Complete brand identity systems including logo design, visual language, and corporate branding.",
-    icon: Palette,
-    href: "/services/branding",
-    bg: "#f4a726",
-    iconColor: "#1c2b3a",
-  },
-  {
-    title: "AI & Automation",
-    subtitle: "Intelligent Workflows",
-    description:
-      "Intelligent workflow automation, chatbots, WhatsApp integration, and AI-powered business tools.",
-    icon: Bot,
-    href: "/services/ai-automation",
-    bg: "#18c499",
+      "Facebook and Instagram campaigns with precise targeting, creative, and optimization.",
+    icon: Megaphone,
+    image: serviceHeroImages["social-media"],
+    href: "/services/social-media",
+    bg: "#2d6ab5",
     iconColor: "#ffffff",
   },
   {
-    title: "CRM Systems",
-    subtitle: "Client Management",
+    title: "Google Ads",
+    subtitle: "High-Intent Demand",
     description:
-      "Custom CRM solutions to streamline sales pipelines, client management, and team collaboration.",
-    icon: Users,
-    href: "/services/crm-systems",
-    bg: "#3a80c8",
+      "Search, display, and Performance Max campaigns that maximize ad spend ROI.",
+    icon: BarChart3,
+    image: serviceHeroImages["digital-marketing"],
+    href: "/services/digital-marketing",
+    bg: "#1a9e80",
     iconColor: "#ffffff",
+  },
+  {
+    title: "Content & AEO",
+    subtitle: "AI Search Visibility",
+    description:
+      "Content that builds authority plus AEO/GEO for AI-generated answers and results.",
+    icon: FileText,
+    image: serviceHeroImages["content-marketing"],
+    href: "/services/content-marketing",
+    bg: "#d1f5ee",
+    iconColor: "#0d1f3c",
   },
 ];
 
@@ -126,7 +136,9 @@ function ServiceIcon({
               ? "0 24px 50px rgba(0,0,0,0.22), 0 8px 20px rgba(0,0,0,0.1)"
               : "0 6px 20px rgba(0,0,0,0.12)",
             border:
-              service.bg === "#ffffff" ? "1px solid #e8f0fb" : "none",
+              service.bg === "#ffffff" || service.bg === "#d1f5ee"
+                ? "1px solid var(--border)"
+                : "none",
           }}
         >
           <Icon
@@ -187,7 +199,7 @@ export default function ServicesPage() {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(180deg, #d4f5eb 0%, #b8e8d8 25%, #c9edd8 50%, #e8f5ee 75%, #f0f9f4 100%)",
+            "var(--gradient-services-page)",
         }}
       >
         {/* Soft radial overlays */}
@@ -195,7 +207,7 @@ export default function ServicesPage() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(24,196,153,0.18) 0%, transparent 70%)",
+              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,158,128,0.12) 0%, transparent 70%)",
           }}
         />
         <div
@@ -209,7 +221,7 @@ export default function ServicesPage() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 50% 40% at 80% 60%, rgba(244,167,38,0.06) 0%, transparent 70%)",
+              "radial-gradient(ellipse 50% 40% at 80% 60%, rgba(30,90,152,0.06) 0%, transparent 70%)",
           }}
         />
       </div>
@@ -221,8 +233,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-heading font-semibold uppercase mb-4"
-            style={{ fontSize: "0.8125rem", letterSpacing: "0.1em", color: "#0f6e56" }}
+            className="text-overline mb-4"
           >
             What We Do
           </motion.p>
@@ -233,7 +244,7 @@ export default function ServicesPage() {
             transition={{ duration: 0.5, delay: 0.08 }}
             className="font-heading font-bold"
             style={{
-              color: "#1c2b3a",
+              color: "var(--wordmark)",
               fontSize: "clamp(2.5rem, 6vw, 4.25rem)",
               lineHeight: 1.08,
               letterSpacing: "-0.025em",
@@ -249,12 +260,11 @@ export default function ServicesPage() {
             className="mt-5 mx-auto leading-relaxed"
             style={{
               fontSize: "clamp(1rem, 2vw, 1.1875rem)",
-              color: "#4a6075",
+              color: "var(--text-secondary)",
               maxWidth: "42ch",
             }}
           >
-            These are the services we&apos;ve crafted for businesses like yours — tools and
-            strategies we use every day to grow, automate, and scale.
+            {brandVoice.servicesIntro}
           </motion.p>
         </div>
       </section>
@@ -294,14 +304,14 @@ export default function ServicesPage() {
           >
             <h2
               className="font-heading font-bold"
-              style={{ color: "#1c2b3a", fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
+              style={{ color: "var(--wordmark)", fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
             >
               Everything you need to{" "}
-              <span style={{ color: "#18c499" }}>grow</span>
+              <span className="text-deep-mint">grow</span>
             </h2>
             <p
               className="mt-4 mx-auto leading-relaxed"
-              style={{ fontSize: "1.0625rem", color: "#4a6075", maxWidth: "48ch" }}
+              style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", maxWidth: "48ch" }}
             >
               Each service is designed to work independently or together as a
               unified growth engine.
@@ -309,42 +319,47 @@ export default function ServicesPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {services.map((service, i) => {
-              const Icon = service.icon;
-              return (
-                <motion.div
-                  key={service.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.45, delay: i * 0.08 }}
-                >
-                  {(() => {
-                    const isLight = service.bg === "#ffffff" || service.bg === "#f4a726";
-                    const textColor = isLight ? "#1c2b3a" : "#ffffff";
-                    const subColor = isLight ? "#4a6075" : "rgba(255,255,255,0.8)";
-                    const iconBg = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.15)";
-                    const linkColor = isLight ? "#1e5a98" : "rgba(255,255,255,0.9)";
+            {services.map((service, i) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+              >
+                {(() => {
+                  const isLight =
+                    service.bg === "#ffffff" || service.bg === "#d1f5ee";
+                  const textColor = isLight
+                    ? "var(--wordmark)"
+                    : "var(--text-on-dark)";
+                  const subColor = isLight
+                    ? "var(--text-secondary)"
+                    : "rgba(255,255,255,0.8)";
+                  const linkColor = isLight
+                    ? "var(--primary)"
+                    : "rgba(255,255,255,0.9)";
 
-                    return (
-                      <Link
-                        href={service.href}
-                        className="group block rounded-2xl p-8 h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-                        style={{
-                          backgroundColor: service.bg,
-                          border: isLight ? "1px solid #e8f0fb" : "none",
-                        }}
-                      >
-                        <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                          style={{ backgroundColor: iconBg }}
-                        >
-                          <Icon
-                            className="w-6 h-6"
-                            style={{ color: textColor }}
-                            strokeWidth={1.8}
-                          />
-                        </div>
+                  return (
+                    <Link
+                      href={service.href}
+                      className="group flex flex-col rounded-2xl overflow-hidden h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                      style={{
+                        backgroundColor: service.bg,
+                        border: isLight ? "1px solid var(--border)" : "none",
+                      }}
+                    >
+                      <div className="relative w-full aspect-[16/10] sm:aspect-[5/3] shrink-0 bg-white/95">
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          className="object-cover object-center"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          unoptimized
+                        />
+                      </div>
+                      <div className="flex flex-col flex-1 p-6 sm:p-8">
                         <h3
                           className="font-heading font-bold mb-2"
                           style={{ fontSize: "1.25rem", color: textColor }}
@@ -352,72 +367,34 @@ export default function ServicesPage() {
                           {service.title}
                         </h3>
                         <p
-                          className="leading-relaxed mb-4"
+                          className="leading-relaxed mb-4 flex-1"
                           style={{ fontSize: "0.9375rem", color: subColor }}
                         >
                           {service.description}
                         </p>
                         <span
-                          className="inline-flex items-center gap-1.5 font-heading font-semibold text-sm group-hover:gap-2.5"
+                          className="inline-flex items-center gap-1.5 font-heading font-semibold text-sm group-hover:gap-2.5 mt-auto"
                           style={{ color: linkColor }}
                         >
                           Explore
-                          <span className="transition-transform group-hover:translate-x-1">→</span>
+                          <span className="transition-transform group-hover:translate-x-1">
+                            →
+                          </span>
                         </span>
-                      </Link>
-                    );
-                  })()}
-                </motion.div>
-              );
-            })}
+                      </div>
+                    </Link>
+                  );
+                })()}
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ========== BOTTOM CTA ========== */}
-      <section className="relative pb-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="rounded-3xl px-8 py-16 sm:px-16 sm:py-20 text-center"
-            style={{ backgroundColor: "#1c2b3a" }}
-          >
-            <h2
-              className="font-heading font-bold mb-4"
-              style={{ color: "#ffffff", fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
-            >
-              Not sure where to start?
-            </h2>
-            <p
-              className="max-w-xl mx-auto mb-8 leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.75)", fontSize: "1.0625rem" }}
-            >
-              Book a free consultation and we&apos;ll map out the perfect strategy
-              for your business goals.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-                style={{ backgroundColor: "#18c499", color: "#ffffff" }}
-              >
-                Book a Call
-                <span>→</span>
-              </Link>
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300"
-                style={{ color: "rgba(255,255,255,0.9)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-              >
-                View Our Work
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <BrandCTA
+        title="Not sure where to start?"
+        description="We'll identify your highest-impact growth channels and build a 90-day roadmap — strategy driven by real data, not guesswork."
+      />
     </main>
   );
 }

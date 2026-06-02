@@ -1,42 +1,36 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter, Fira_Code } from "next/font/google";
+import { Outfit, Nunito_Sans } from "next/font/google";
 import { Header, Footer } from "@/components/layout";
+import { logoAssets } from "@/config/logo";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["400", "600", "700", "800"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const nunitoSans = Nunito_Sans({
+  variable: "--font-nunito-sans",
   subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
-
-const firaCode = Fira_Code({
-  variable: "--font-fira-code",
-  subsets: ["latin"],
-  weight: ["500"],
+  weight: ["300", "400", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "247 Digital Pro — Growth, Automation & Technology Solutions",
-    template: "%s | 247 Digital Pro",
+    default: `${siteConfig.name} — Marketing Systems That Drive Measurable Growth`,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Digital growth, AI automation, SaaS & technology solutions unified into one powerful business ecosystem. Helping startups, SMEs, contractors, and enterprises scale.",
+  description: siteConfig.description,
   icons: {
     icon: [
-      { url: "/icon-247.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon-247.png", sizes: "192x192", type: "image/png" },
+      { url: logoAssets.icon, sizes: "32x32", type: "image/png" },
+      { url: logoAssets.icon, sizes: "192x192", type: "image/png" },
     ],
-    apple: { url: "/icon-247.png", sizes: "180x180" },
+    apple: { url: logoAssets.icon, sizes: "180x180" },
   },
 };
 
@@ -48,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${inter.variable} ${firaCode.variable} h-full antialiased`}
+      className={`${outfit.variable} ${nunitoSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Header />

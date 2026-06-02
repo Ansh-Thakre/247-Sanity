@@ -1,38 +1,33 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  Search,
-  Bot,
-  Gauge,
-  LineChart,
-} from "lucide-react";
+import { ArrowRight, LineChart, Search } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { brandVoice } from "@/config/brand";
+import { Button } from "@/components/ui/Button";
 
 const leadMagnets = [
-  { icon: Search, label: "Free SEO Audit", href: "/tools/seo-audit" },
-  { icon: Bot, label: "Automation Consultation", href: "/contact#consultation" },
-  { icon: Gauge, label: "Website Performance Audit", href: "/tools" },
-  { icon: LineChart, label: "Growth Strategy Session", href: "/contact#consultation" },
+  { icon: Search, label: brandVoice.ctaAudit, href: "/contact#consultation" },
+  {
+    icon: LineChart,
+    label: "Growth Strategy Session",
+    href: "/contact#consultation",
+  },
 ];
 
 export function CTASection() {
   return (
     <>
-      {/* Lead Magnet Cards */}
-      <section className="py-16 md:py-20 bg-[#eaf9f5]/40">
+      <section className="py-16 md:py-20 bg-brand-mint/30">
         <Container>
           <div className="text-center mb-10">
-            <p className="text-xs font-semibold tracking-[0.08em] uppercase text-[#18c499] font-heading mb-3">
-              Free Resources
-            </p>
-            <h2 className="font-heading font-bold text-[#1c2b3a] text-2xl md:text-3xl">
-              Get Started Today
+            <p className="text-overline mb-3">Get Started</p>
+            <h2 className="font-heading font-bold text-wordmark text-2xl md:text-3xl">
+              Replace guesswork with measurable growth
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
             {leadMagnets.map((item, i) => (
               <motion.div
                 key={item.label}
@@ -41,24 +36,29 @@ export function CTASection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: i * 0.08 }}
               >
-                <Link
-                  href={item.href}
-                  className="group flex flex-col items-center text-center gap-3 p-5 bg-white rounded-2xl border border-[#e8f0fb] hover:border-[#18c499]/30 hover:shadow-md transition-all duration-300"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-[#d1f5ee] flex items-center justify-center group-hover:bg-[#18c499] transition-colors duration-300">
-                    <item.icon className="w-5 h-5 text-[#0f6e56] group-hover:text-white transition-colors duration-300" />
+                <div className="flex flex-col items-center text-center gap-3 p-5 bg-white rounded-xl border border-border hover:border-deep-mint/40 hover:shadow-md transition-all duration-300">
+                  <div className="w-10 h-10 rounded-lg bg-brand-mint flex items-center justify-center">
+                    <item.icon className="w-5 h-5 text-deep-navy" />
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-[#1c2b3a] leading-tight">
+                  <span className="text-sm font-semibold text-ink leading-tight">
                     {item.label}
                   </span>
-                </Link>
+                  <Button
+                    href={item.href}
+                    variant={i === 0 ? "emphasis" : "outline"}
+                    size="sm"
+                    className="w-full"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    {item.label}
+                  </Button>
+                </div>
               </motion.div>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* Bottom CTA */}
       <section className="relative pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -66,38 +66,21 @@ export function CTASection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="rounded-3xl px-8 py-16 sm:px-16 sm:py-20 text-center"
-            style={{ backgroundColor: "#1c2b3a" }}
+            className="surface-dark rounded-2xl px-8 py-16 sm:px-16 sm:py-20 text-center bg-deep-navy"
           >
-            <h2
-              className="font-heading font-bold mb-4"
-              style={{ color: "#ffffff", fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
-            >
-              Not sure where to start?
+            <h2 className="font-heading font-bold text-white mb-4 leading-tight">
+              {brandVoice.ctaDarkTitle}
             </h2>
-            <p
-              className="max-w-xl mx-auto mb-8 leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.75)", fontSize: "1.0625rem" }}
-            >
-              Book a free consultation and we&apos;ll map out the perfect strategy
-              for your business goals.
+            <p className="max-w-xl mx-auto mb-8 text-lead text-white/80">
+              {brandVoice.ctaDarkDescription}
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-                style={{ backgroundColor: "#18c499", color: "#ffffff" }}
-              >
-                Book a Call
-                <span>→</span>
-              </Link>
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300"
-                style={{ color: "rgba(255,255,255,0.9)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-              >
-                View Our Work
-              </Link>
+            <div className="flex flex-wrap justify-center gap-4 max-w-lg mx-auto">
+              <Button href="/contact#consultation" variant="mint" size="lg">
+                {brandVoice.ctaPrimary}
+              </Button>
+              <Button href="/portfolio" variant="outlineDark" size="lg">
+                {brandVoice.ctaCaseStudies}
+              </Button>
             </div>
           </motion.div>
         </div>

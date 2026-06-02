@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import { siteConfig } from "@/config/site";
 import { trustMetrics } from "@/data/metrics";
 
 const techLogos = [
@@ -56,7 +57,7 @@ export function TrustMetricsSection() {
             width: logo.size,
             height: logo.size,
             backgroundColor: "#ffffff",
-            border: "1px solid #e8f0fb",
+            border: "1px solid var(--border)",
           }}
         >
           <Image
@@ -72,20 +73,21 @@ export function TrustMetricsSection() {
 
       <Container className="relative z-10">
         <div className="text-center">
-          <p className="text-overline text-2xl md:text-3xl lg:text-4xl mb-10 md:mb-14">
-            Trusted by Businesses Worldwide
-          </p>
+          <p className="text-overline mb-3">Trusted Worldwide</p>
+          <h2 className="font-heading font-bold text-wordmark text-[clamp(1.75rem,4vw,2.5rem)] mb-10 md:mb-14">
+            {siteConfig.experienceYears} years driving measurable growth
+          </h2>
 
           <div className="grid grid-cols-2 gap-8 md:gap-10 max-w-2xl mx-auto">
             {trustMetrics.map((metric) => (
               <div key={metric.label} className="flex flex-col items-center">
-                <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-[#1c2b3a] leading-none tracking-tight font-mono font-medium">
+                <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-ink leading-none tracking-tight font-mono font-medium">
                   <AnimatedCounter
                     value={metric.value}
                     suffix={metric.suffix}
                   />
                 </span>
-                <span className="mt-2 text-sm md:text-base text-[#4a6075] font-heading font-semibold">
+                <span className="mt-2 text-sm md:text-base text-slate font-heading font-semibold">
                   {metric.label}
                 </span>
               </div>

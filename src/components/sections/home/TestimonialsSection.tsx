@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,12 +7,12 @@ import { cn } from "@/lib/cn";
 import { testimonials, type Testimonial } from "@/data/testimonials";
 
 const avatarColors = [
-  "bg-[#1e5a98]",
-  "bg-[#18c499]",
-  "bg-[#f4a726]",
-  "bg-[#3a80c8]",
-  "bg-[#1c2b3a]",
-  "bg-[#e8544f]",
+  "bg-primary",
+  "bg-deep-mint",
+  "bg-mid-mint",
+  "bg-primary-light",
+  "bg-deep-navy",
+  "bg-wordmark",
 ];
 
 /* ─── Testimonial Card ─── */
@@ -37,17 +37,17 @@ function TestimonialCard({
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className={cn(
-        "bg-white rounded-2xl p-7 border border-[#e8f0fb] shadow-[0_2px_16px_rgba(30,90,152,0.06)]",
+        "bg-white rounded-2xl p-7 border border-border shadow-[0_2px_16px_rgba(30,90,152,0.06)]",
         "flex flex-col cursor-pointer relative z-20",
-        "transition-[border-color] duration-200 hover:border-[#3a80c8]/30",
+        "transition-[border-color] duration-200 hover:border-primary-light/30",
         className
       )}
     >
-      <p className="text-base text-[#1c2b3a] leading-relaxed flex-1">
+      <p className="text-base text-ink leading-relaxed flex-1">
         &ldquo;{testimonial.quote}&rdquo;
       </p>
 
-      <div className="flex items-center gap-3.5 mt-6 pt-5 border-t border-[#e8f0fb]">
+      <div className="flex items-center gap-3.5 mt-6 pt-5 border-t border-border">
         <div
           className={cn(
             "w-11 h-11 rounded-full flex items-center justify-center shrink-0",
@@ -59,10 +59,10 @@ function TestimonialCard({
           </span>
         </div>
         <div>
-          <p className="text-base font-heading font-semibold text-[#1c2b3a]">
+          <p className="text-base font-heading font-semibold text-ink">
             {testimonial.name}
           </p>
-          <p className="text-sm text-[#4a6075]">
+          <p className="text-sm text-slate">
             {testimonial.role}, {testimonial.company}
           </p>
         </div>
@@ -87,13 +87,13 @@ function MobileSwiper() {
   return (
     <div className="lg:hidden">
       <div className="text-center mb-10">
-        <p className="text-xs font-semibold tracking-[0.08em] uppercase text-[#18c499] font-heading mb-3">
+        <p className="text-xs font-semibold tracking-[0.08em] uppercase text-deep-mint font-heading mb-3">
           Testimonials
         </p>
-        <h2 className="font-heading font-bold text-[#1c2b3a] text-2xl sm:text-3xl">
+        <h2 className="font-heading font-bold text-ink text-2xl sm:text-3xl">
           What Our Clients Say
         </h2>
-        <p className="mt-3 text-sm text-[#4a6075] max-w-md mx-auto leading-relaxed">
+        <p className="mt-3 text-sm text-slate max-w-md mx-auto leading-relaxed">
           Don&rsquo;t just take our word for it — hear from the businesses
           we&rsquo;ve helped grow.
         </p>
@@ -120,7 +120,7 @@ function MobileSwiper() {
       <div className="flex items-center justify-center gap-4 mt-8">
         <button
           onClick={prev}
-          className="w-10 h-10 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-colors"
+          className="w-10 h-10 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-colors"
           aria-label="Previous testimonial"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -134,8 +134,8 @@ function MobileSwiper() {
               className={cn(
                 "w-2 h-2 rounded-full transition-all duration-300",
                 i === current
-                  ? "bg-[#1e5a98] w-6"
-                  : "bg-[#e8f0fb] hover:bg-[#3a80c8]/30"
+                  ? "bg-primary w-6"
+                  : "bg-pale-blue hover:bg-primary-light/30"
               )}
               aria-label={`Go to testimonial ${i + 1}`}
             />
@@ -144,7 +144,7 @@ function MobileSwiper() {
 
         <button
           onClick={next}
-          className="w-10 h-10 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-colors"
+          className="w-10 h-10 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-colors"
           aria-label="Next testimonial"
         >
           <ChevronRight className="w-5 h-5" />
@@ -220,13 +220,13 @@ function DesktopLayout() {
         {/* ── Center heading (absolute, always centered) ── */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
           <div className="text-center max-w-[400px] px-4">
-            <p className="text-sm font-semibold tracking-[0.08em] uppercase text-[#18c499] font-heading mb-4">
+            <p className="text-sm font-semibold tracking-[0.08em] uppercase text-deep-mint font-heading mb-4">
               Testimonials
             </p>
-            <h2 className="font-heading font-bold text-[#1c2b3a] text-4xl xl:text-[2.75rem] xl:leading-[1.12]">
+            <h2 className="font-heading font-bold text-ink text-4xl xl:text-[2.75rem] xl:leading-[1.12]">
               What Our Clients Say
             </h2>
-            <p className="mt-5 text-base text-[#4a6075] leading-relaxed">
+            <p className="mt-5 text-base text-slate leading-relaxed">
               Don&rsquo;t just take our word for it — hear from the businesses
               we&rsquo;ve helped grow.
             </p>
@@ -235,7 +235,7 @@ function DesktopLayout() {
             <div className="flex items-center justify-center gap-3 mt-8 pointer-events-auto">
               <button
                 onClick={handlePrev}
-                className="w-10 h-10 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-colors"
+                className="w-10 h-10 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-colors"
                 aria-label="Previous testimonials"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -249,8 +249,8 @@ function DesktopLayout() {
                     className={cn(
                       "h-2 rounded-full transition-all duration-300",
                       i === page
-                        ? "bg-[#1e5a98] w-6"
-                        : "bg-[#e8f0fb] w-2 hover:bg-[#3a80c8]/30"
+                        ? "bg-primary w-6"
+                        : "bg-pale-blue w-2 hover:bg-primary-light/30"
                     )}
                     aria-label={`Go to page ${i + 1}`}
                   />
@@ -259,7 +259,7 @@ function DesktopLayout() {
 
               <button
                 onClick={handleNext}
-                className="w-10 h-10 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-colors"
+                className="w-10 h-10 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-colors"
                 aria-label="Next testimonials"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -315,7 +315,7 @@ function DesktopLayout() {
 /* ─── Main Export ─── */
 export function TestimonialsSection() {
   return (
-    <section className="py-16 md:py-24 bg-[#fafcff] overflow-hidden">
+    <section className="py-16 md:py-24 bg-surface overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <DesktopLayout />
         <MobileSwiper />

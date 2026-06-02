@@ -12,37 +12,37 @@ const SERVICE_ICONS = [
   },
   {
     label: "Web",
-    color: "#18c499",
+    color: "#1a9e80",
     path: "M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z",
   },
   {
-    label: "Social",
-    color: "#f4a726",
+    label: "Meta",
+    color: "#2d6ab5",
     path: "M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9zM13.73 21a2 2 0 01-3.46 0",
   },
   {
     label: "Ads",
-    color: "#e8544f",
+    color: "#1a3a5f",
     path: "M22 12h-4l-3 9L9 3l-3 9H2",
   },
   {
     label: "Analytics",
-    color: "#6c5ce7",
+    color: "#7dd4c0",
     path: "M18 20V10M12 20V4M6 20v-6",
   },
   {
-    label: "Branding",
-    color: "#3a80c8",
+    label: "Brand",
+    color: "#1e5a98",
     path: "M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.586 7.586M11 13a2 2 0 100-4 2 2 0 000 4z",
   },
   {
-    label: "AI",
-    color: "#0f6e56",
+    label: "AEO",
+    color: "#1a9e80",
     path: "M12 8V4H8M2 12h2M20 12h2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41M16 12a4 4 0 11-8 0 4 4 0 018 0z",
   },
   {
     label: "Content",
-    color: "#854f0b",
+    color: "#0d1f3c",
     path: "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   },
 ];
@@ -96,8 +96,7 @@ export function IntroAnimation({ children }: { children: React.ReactNode }) {
         {phase === "intro" && (
           <motion.div
             key="intro-overlay"
-            className="fixed inset-0 z-9999 flex items-center justify-center overflow-hidden"
-            style={{ backgroundColor: "#f7fbfe" }}
+            className="fixed inset-0 z-9999 flex items-center justify-center overflow-hidden bg-surface"
             exit={{
               scale: 3.5,
               opacity: 0,
@@ -245,7 +244,7 @@ export function IntroAnimation({ children }: { children: React.ReactNode }) {
                     alt="247 Digital Pro"
                     width={96}
                     height={96}
-                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl shadow-xl"
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-contain"
                     priority
                   />
                 </motion.div>
@@ -259,9 +258,9 @@ export function IntroAnimation({ children }: { children: React.ReactNode }) {
                 animate={{ opacity: 1, y: isMobile ? 50 : 60 }}
                 transition={{ duration: 0.5, delay: 2.2, ease: "easeOut" }}
               >
-                <p className="font-heading font-bold text-[#1c2b3a] text-base sm:text-xl tracking-tight whitespace-nowrap">
-                  24/7{" "}
-                  <span className="text-[#1e5a98]">Digital Pro</span>
+                <p className="font-heading font-bold text-wordmark text-base sm:text-xl tracking-tight whitespace-nowrap">
+                  247{" "}
+                  <span className="text-primary">Digital Pro</span>
                 </p>
               </motion.div>
             </div>

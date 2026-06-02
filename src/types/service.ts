@@ -3,4 +3,11 @@ export interface ServiceOverviewItem {
   description: string;
   icon: string;
   href: string;
+  badge?: "CORE" | "NEW";
+}
+
+export interface AeoGeoFeature {
+  title: string;
+  description: string;
+  href: string;
 }

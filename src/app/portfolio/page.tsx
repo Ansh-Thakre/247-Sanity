@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { brandVoice } from "@/config/brand";
+import { BrandCTA } from "@/components/ui/BrandCTA";
 import { cn } from "@/lib/cn";
 import { Container } from "@/components/layout/Container";
 
@@ -29,7 +31,7 @@ const projects: PortfolioProject[] = [
     metric: "+280%",
     metricLabel: "Lead Conversion",
     tags: ["CRM", "SaaS", "Automation"],
-    gradient: "from-[#1e5a98] via-[#2d6db5] to-[#3a80c8]",
+    gradient: "from-primary via-[#2d6db5] to-primary-light",
     accent: "#1e5a98",
   },
   {
@@ -41,8 +43,8 @@ const projects: PortfolioProject[] = [
     metric: "3x",
     metricLabel: "Revenue Growth",
     tags: ["Ecommerce", "AI", "Multi-vendor"],
-    gradient: "from-[#18c499] via-[#1fd4a5] to-[#25e0b0]",
-    accent: "#0f6e56",
+    gradient: "from-deep-mint via-mid-mint to-brand-mint",
+    accent: "#1a9e80",
   },
   {
     title: "GreenLeaf Brand Identity",
@@ -53,8 +55,8 @@ const projects: PortfolioProject[] = [
     metric: "+450%",
     metricLabel: "Brand Recall",
     tags: ["Branding", "Identity", "Packaging"],
-    gradient: "from-[#f4a726] via-[#f5b94d] to-[#f6cb74]",
-    accent: "#854f0b",
+    gradient: "from-mid-mint via-brand-mint to-pale-blue",
+    accent: "#1a3a5f",
   },
   {
     title: "AutoFlow Marketing Suite",
@@ -65,8 +67,8 @@ const projects: PortfolioProject[] = [
     metric: "10M+",
     metricLabel: "Leads Generated",
     tags: ["AI", "Marketing", "Automation"],
-    gradient: "from-[#e8544f] via-[#ec6e6a] to-[#f08885]",
-    accent: "#c0392b",
+    gradient: "from-primary via-primary-light to-deep-navy",
+    accent: "#1e5a98",
   },
   {
     title: "FinTrack Dashboard",
@@ -77,8 +79,8 @@ const projects: PortfolioProject[] = [
     metric: "98%",
     metricLabel: "Accuracy Rate",
     tags: ["FinTech", "Analytics", "Dashboard"],
-    gradient: "from-[#6c5ce7] via-[#7f70ea] to-[#9284ed]",
-    accent: "#5a4bd1",
+    gradient: "from-wordmark via-primary to-deep-navy",
+    accent: "#1a3a5f",
   },
   {
     title: "MediConnect Portal",
@@ -89,8 +91,8 @@ const projects: PortfolioProject[] = [
     metric: "+320%",
     metricLabel: "Patient Engagement",
     tags: ["HealthTech", "Portal", "Telemedicine"],
-    gradient: "from-[#00b894] via-[#1dc9a6] to-[#3adab8]",
-    accent: "#0f6e56",
+    gradient: "from-deep-mint to-primary-dark",
+    accent: "#1a9e80",
   },
   {
     title: "LogiFlow Supply Chain",
@@ -101,8 +103,8 @@ const projects: PortfolioProject[] = [
     metric: "-40%",
     metricLabel: "Operating Costs",
     tags: ["Supply Chain", "IoT", "Enterprise"],
-    gradient: "from-[#0984e3] via-[#2d9aeb] to-[#51b0f3]",
-    accent: "#0f3d6e",
+    gradient: "from-primary-light to-primary",
+    accent: "#2d6ab5",
   },
   {
     title: "EduSpark LMS",
@@ -113,8 +115,8 @@ const projects: PortfolioProject[] = [
     metric: "50K+",
     metricLabel: "Active Learners",
     tags: ["EdTech", "LMS", "Gamification"],
-    gradient: "from-[#fd79a8] via-[#fd94b8] to-[#feafc8]",
-    accent: "#c0392b",
+    gradient: "from-brand-mint to-primary-light",
+    accent: "#1e5a98",
   },
 ];
 
@@ -143,7 +145,7 @@ function PortfolioCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.45, delay: index * 0.08 }}
-      className="group relative rounded-3xl overflow-hidden bg-white border border-[#e8f0fb] shadow-[0_2px_20px_rgba(30,90,152,0.06)] hover:shadow-[0_8px_40px_rgba(30,90,152,0.12)] hover:border-[#b5d4f4] transition-all duration-500"
+      className="group relative rounded-3xl overflow-hidden bg-white border border-border shadow-[0_2px_20px_rgba(30,90,152,0.06)] hover:shadow-[0_8px_40px_rgba(30,90,152,0.12)] hover:border-primary/30 transition-all duration-500"
     >
       {/* Card top gradient area */}
       <div
@@ -167,10 +169,10 @@ function PortfolioCard({
 
       {/* Card body */}
       <div className="p-6">
-        <h3 className="text-lg font-heading font-bold text-[#1c2b3a] mb-2 group-hover:text-[#1e5a98] transition-colors">
+        <h3 className="text-lg font-heading font-bold text-ink mb-2 group-hover:text-primary transition-colors">
           {project.title}
         </h3>
-        <p className="text-sm text-[#4a6075] leading-relaxed mb-5 line-clamp-2">
+        <p className="text-sm text-slate leading-relaxed mb-5 line-clamp-2">
           {project.description}
         </p>
 
@@ -179,7 +181,7 @@ function PortfolioCard({
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-1 rounded-full bg-[#e8f0fb] text-[11px] font-medium text-[#1e5a98]"
+              className="px-2.5 py-1 rounded-full bg-pale-blue text-[11px] font-medium text-primary"
             >
               {tag}
             </span>
@@ -187,14 +189,14 @@ function PortfolioCard({
         </div>
 
         {/* Metric */}
-        <div className="flex items-baseline gap-2 pt-4 border-t border-[#e8f0fb]">
+        <div className="flex items-baseline gap-2 pt-4 border-t border-border">
           <span
             className="font-mono text-2xl font-bold"
             style={{ color: project.accent }}
           >
             {project.metric}
           </span>
-          <span className="text-xs text-[#4a6075]">{project.metricLabel}</span>
+          <span className="text-xs text-slate">{project.metricLabel}</span>
         </div>
       </div>
     </motion.div>
@@ -234,7 +236,7 @@ export default function PortfolioPage() {
   return (
     <>
       {/* ── Hero Section ── */}
-      <section className="relative pt-20 pb-16 md:pt-28 md:pb-20 overflow-hidden bg-[#f7fbfe]">
+      <section className="relative pt-20 pb-16 md:pt-28 md:pb-20 overflow-hidden bg-surface">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(30,90,152,0.06),transparent_70%)]" />
 
         <Container className="relative z-10">
@@ -244,38 +246,36 @@ export default function PortfolioPage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <p className="text-sm font-semibold tracking-widest uppercase text-[#18c499] font-heading mb-4">
-              Our Portfolio
-            </p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-heading font-bold text-[#1c2b3a] leading-[1.12] tracking-tight">
-              Projects That Speak{" "}
-              <span className="text-[#1e5a98]">Results</span>
+            <p className="text-overline mb-4">Case Studies & Portfolio</p>
+            <h1 className="font-heading font-bold text-wordmark text-[clamp(2rem,5vw,3.25rem)] leading-[1.12] tracking-tight">
+              Projects that drive{" "}
+              <span className="text-primary">measurable growth</span>
             </h1>
-            <p className="mt-6 text-base md:text-lg text-[#4a6075] max-w-xl mx-auto leading-relaxed">
-              From startups to enterprises, we&rsquo;ve delivered transformative
-              digital solutions that drive measurable business growth.
+            <p className="mt-6 text-lead text-slate max-w-xl mx-auto">
+              Qualified leads, conversions, and revenue outcomes — strategy backed
+              by real data across entrepreneurs and growth-stage businesses.
             </p>
           </motion.div>
         </Container>
       </section>
 
       {/* ── Portfolio Grid Section ── */}
-      <section className="relative py-16 md:py-24 overflow-hidden bg-[#f0f6fd]">
+      <section className="relative py-16 md:py-24 overflow-hidden bg-surface">
         {/* Soft background decorations */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-[#18c499]/5 blur-[120px]" />
-          <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-[#3a80c8]/5 blur-[120px]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[#f4a726]/5 blur-[150px]" />
+          <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-deep-mint/5 blur-[120px]" />
+          <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-primary-light/5 blur-[120px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-mid-mint/5 blur-[150px]" />
         </div>
 
         <Container className="relative z-10">
           {/* Section header: title left, nav right */}
           <div className="flex items-start sm:items-center justify-between mb-12">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-[#18c499] font-heading mb-2">
+              <p className="text-xs font-semibold tracking-widest uppercase text-deep-mint font-heading mb-2">
                 Featured Work
               </p>
-              <h2 className="font-heading font-bold text-[#1c2b3a] text-2xl sm:text-3xl md:text-4xl">
+              <h2 className="font-heading font-bold text-ink text-2xl sm:text-3xl md:text-4xl">
                 Our Projects
               </h2>
             </div>
@@ -283,7 +283,7 @@ export default function PortfolioPage() {
             <div className="hidden sm:flex items-center gap-3">
               <button
                 onClick={handlePrev}
-                className="w-11 h-11 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-all duration-300 shadow-sm"
+                className="w-11 h-11 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-all duration-300 shadow-sm"
                 aria-label="Previous projects"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -297,8 +297,8 @@ export default function PortfolioPage() {
                     className={cn(
                       "h-2 rounded-full transition-all duration-300",
                       i === slide
-                        ? "bg-[#1e5a98] w-6"
-                        : "bg-[#e8f0fb] w-2 hover:bg-[#3a80c8]/30"
+                        ? "bg-primary w-6"
+                        : "bg-pale-blue w-2 hover:bg-primary-light/30"
                     )}
                     aria-label={`Go to slide ${i + 1}`}
                   />
@@ -307,7 +307,7 @@ export default function PortfolioPage() {
 
               <button
                 onClick={handleNext}
-                className="w-11 h-11 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-all duration-300 shadow-sm"
+                className="w-11 h-11 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-all duration-300 shadow-sm"
                 aria-label="Next projects"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -339,7 +339,7 @@ export default function PortfolioPage() {
           <div className="flex sm:hidden items-center justify-center gap-4 mt-10">
             <button
               onClick={handlePrev}
-              className="w-11 h-11 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-all duration-300 shadow-sm"
+              className="w-11 h-11 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-all duration-300 shadow-sm"
               aria-label="Previous projects"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -353,8 +353,8 @@ export default function PortfolioPage() {
                   className={cn(
                     "h-2 rounded-full transition-all duration-300",
                     i === slide
-                      ? "bg-[#1e5a98] w-6"
-                      : "bg-[#e8f0fb] w-2 hover:bg-[#3a80c8]/30"
+                      ? "bg-primary w-6"
+                      : "bg-pale-blue w-2 hover:bg-primary-light/30"
                   )}
                   aria-label={`Go to slide ${i + 1}`}
                 />
@@ -363,7 +363,7 @@ export default function PortfolioPage() {
 
             <button
               onClick={handleNext}
-              className="w-11 h-11 rounded-full border border-[#e8f0fb] bg-white flex items-center justify-center text-[#1c2b3a] hover:bg-[#e8f0fb] transition-all duration-300 shadow-sm"
+              className="w-11 h-11 rounded-full border border-border bg-white flex items-center justify-center text-ink hover:bg-surface transition-all duration-300 shadow-sm"
               aria-label="Next projects"
             >
               <ChevronRight className="w-5 h-5" />
@@ -372,50 +372,10 @@ export default function PortfolioPage() {
         </Container>
       </section>
 
-      {/* ── Bottom CTA ── */}
-      <section className="relative pb-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="rounded-3xl px-8 py-16 sm:px-16 sm:py-20 text-center"
-            style={{ backgroundColor: "#1c2b3a" }}
-          >
-            <h2
-              className="font-heading font-bold mb-4"
-              style={{ color: "#ffffff", fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
-            >
-              Not sure where to start?
-            </h2>
-            <p
-              className="max-w-xl mx-auto mb-8 leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.75)", fontSize: "1.0625rem" }}
-            >
-              Book a free consultation and we&apos;ll map out the perfect strategy
-              for your business goals.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-                style={{ backgroundColor: "#18c499", color: "#ffffff" }}
-              >
-                Book a Call
-                <span>→</span>
-              </Link>
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300"
-                style={{ color: "rgba(255,255,255,0.9)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-              >
-                View Our Work
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <BrandCTA
+        title="Not sure where to start?"
+        description={brandVoice.ctaConsultation}
+      />
     </>
   );
 }

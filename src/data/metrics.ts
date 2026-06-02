@@ -5,8 +5,8 @@ export interface TrustMetric {
 }
 
 export const trustMetrics: TrustMetric[] = [
+  { value: 15, suffix: "+", label: "Years Experience" },
   { value: 500, suffix: "+", label: "Projects Delivered" },
-  { value: 120, suffix: "+", label: "Active Clients" },
   { value: 98, suffix: "%", label: "Client Retention" },
   { value: 10, suffix: "M+", label: "Leads Generated" },
 ];

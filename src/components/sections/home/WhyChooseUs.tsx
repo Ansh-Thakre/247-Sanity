@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
+import { brandVoice } from "@/config/brand";
 import {
   Target,
   Monitor,
@@ -14,45 +15,45 @@ import {
 const differentiators = [
   {
     icon: Target,
-    title: "Strategy + Execution",
+    title: "Outcome-Focused",
     description:
-      "We don't just plan — we execute. Every strategy is backed by data-driven implementation and measurable results.",
+      "We lead with results — leads, revenue, and growth. Every strategy connects back to what you actually gain.",
     color: "#1e5a98",
   },
   {
     icon: Monitor,
-    title: "Marketing + Technology",
+    title: "Strategy + Execution",
     description:
-      "The rare fusion of marketing expertise and technical capability under one roof, eliminating agency fragmentation.",
-    color: "#18c499",
+      "We don't just plan — we execute together. One team for strategy, creative, SEO, and paid media.",
+    color: "#1a9e80",
   },
   {
     icon: Bot,
-    title: "AI-Driven Automation",
+    title: "AEO & GEO Ready",
     description:
-      "Leverage intelligent automation to streamline operations, reduce costs, and scale without proportional overhead.",
-    color: "#6c5ce7",
+      "AEO ensures your business appears when AI tools answer your customers' questions — not just on page one of Google.",
+    color: "#2d6ab5",
   },
   {
     icon: TrendingUp,
-    title: "Conversion-Focused Systems",
+    title: "Data-Backed Confidence",
     description:
-      "Every system we build is engineered to convert visitors into customers and drive measurable revenue growth.",
+      "Qualified leads, measurable growth, and clear accountability — specific beats general every time.",
     color: "#1e5a98",
   },
   {
     icon: Building2,
-    title: "Enterprise Scalability",
+    title: "Clear & Jargon-Free",
     description:
-      "Architecture designed to grow with your business — from early-stage startup to enterprise-scale operations.",
-    color: "#18c499",
+      "Plain, direct language on timelines, channels, and ROI. We explain AEO, GEO, and SEO in business terms.",
+    color: "#1a9e80",
   },
   {
     icon: Layers,
-    title: "End-to-End Solutions",
+    title: "Strategic Partner",
     description:
-      "From branding to development to marketing — a complete digital ecosystem partner for your entire journey.",
-    color: "#6c5ce7",
+      "We're not a vendor — we're an invested partner. Collaborative tone, shared goals, and transparent reporting.",
+    color: "#1a3a5f",
   },
 ];
 
@@ -61,10 +62,7 @@ export function WhyChooseUs() {
   const rightCards = [differentiators[1], differentiators[3], differentiators[5]];
 
   return (
-    <section
-      className="py-16 md:py-24"
-      style={{ background: "linear-gradient(180deg, #ffffff 0%, #89D4FF25 30%, #89D4FF35 60%, #89D4FF20 85%, #ffffff 100%)" }}
-    >
+    <section className="py-16 md:py-24 bg-linear-to-b from-white via-pale-blue/20 to-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Left column — sticky heading */}
@@ -75,28 +73,16 @@ export function WhyChooseUs() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-4 lg:sticky lg:top-32"
           >
-            <p className="text-xs font-semibold tracking-widest uppercase text-[#18c499] font-heading mb-3">
-              Core Differentiators
-            </p>
-            <h2
-              className="font-heading font-bold text-[#1c2b3a] leading-[1.1]"
-              style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)" }}
-            >
-              Why{" "}
-              <span className="text-[#1e5a98]">Choose Us?</span>
+            <p className="text-overline mb-3">Why Partner With Us</p>
+            <h2 className="font-heading font-bold text-wordmark text-[clamp(2rem,4vw,2.75rem)] leading-[1.1]">
+              Your Strategic Growth{" "}
+              <span className="text-primary">Partner</span>
             </h2>
-            <p className="mt-5 text-[#4a6075] leading-relaxed" style={{ fontSize: "1.0625rem" }}>
-              What makes 247 Digital the right partner for your digital
-              transformation. We combine strategy, technology, and execution
-              under one roof.
-            </p>
+            <p className="mt-5 text-slate text-lead">{brandVoice.partnerLine}</p>
             <div className="mt-8">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3 font-heading font-semibold text-sm bg-[#1e5a98] text-white hover:bg-[#0f3d6e] transition-all duration-300 shadow-lg shadow-[#1e5a98]/20 hover:-translate-y-0.5"
-              >
-                Contact Us
-              </Link>
+              <Button href="/contact#consultation" variant="primary" size="lg">
+                {brandVoice.ctaPrimary}
+              </Button>
             </div>
           </motion.div>
 
@@ -145,7 +131,7 @@ function ValueCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.45, delay: index * 0.08 }}
-      className="bg-white rounded-2xl p-6 sm:p-7 border border-[#e8f0fb] shadow-[0_2px_16px_rgba(30,90,152,0.04)] hover:shadow-[0_8px_32px_rgba(30,90,152,0.10)] hover:border-[#b5d4f4] transition-all duration-300"
+      className="bg-white rounded-2xl p-6 sm:p-7 border border-border shadow-[0_2px_16px_rgba(30,90,152,0.04)] hover:shadow-[0_8px_32px_rgba(30,90,152,0.10)] hover:border-primary/30 transition-all duration-300"
     >
       <div className="flex items-start gap-3 mb-3">
         <div
@@ -154,11 +140,11 @@ function ValueCard({
         >
           <item.icon className="w-[18px] h-[18px]" style={{ color: item.color }} />
         </div>
-        <h3 className="font-heading font-bold text-[#1c2b3a] text-lg leading-snug">
+        <h3 className="font-heading font-bold text-ink text-lg leading-snug">
           {item.title}
         </h3>
       </div>
-      <p className="text-sm text-[#4a6075] leading-relaxed pl-12">
+      <p className="text-sm text-slate leading-relaxed pl-12">
         {item.description}
       </p>
     </motion.div>

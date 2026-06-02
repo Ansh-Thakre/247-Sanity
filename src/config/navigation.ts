@@ -2,20 +2,7 @@ import type { NavItem } from "@/types/navigation";
 
 export const mainNavItems: NavItem[] = [
   { label: "About", href: "/about" },
-  {
-    label: "Services",
-    href: "/services",
-    children: [
-      { label: "Digital Marketing", href: "/services/digital-marketing" },
-      { label: "SEO Services", href: "/services/seo" },
-      { label: "Web Development", href: "/services/web-development" },
-      { label: "Branding & Creative", href: "/services/branding" },
-      { label: "AI & Automation", href: "/services/ai-automation" },
-      { label: "SaaS Solutions", href: "/services/saas-solutions" },
-      { label: "Content Marketing", href: "/services/content-marketing" },
-      { label: "Social Media", href: "/services/social-media" },
-    ],
-  },
+  { label: "Services", href: "/services" },
   { label: "Products", href: "/products" },
   { label: "Portfolio", href: "/portfolio" },
   {

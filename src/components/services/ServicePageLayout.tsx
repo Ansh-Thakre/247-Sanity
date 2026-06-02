@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   motion,
   useScroll,
@@ -11,6 +12,8 @@ import {
 } from "framer-motion";
 import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { brandVoice } from "@/config/brand";
+import { Button } from "@/components/ui/Button";
 import { getServiceBySlug } from "@/data/service-details";
 import type { ServicePanel } from "@/types/service-detail";
 
@@ -47,7 +50,7 @@ function ServicePanelCard({
         isCta && "justify-between"
       )}
       style={{
-        backgroundColor: isCta ? "#1c2b3a" : "#ffffff",
+        backgroundColor: isCta ? "var(--deep-navy)" : "#ffffff",
         border: isCta ? "none" : "1px solid var(--border-light)",
         boxShadow: isCta
           ? "0 24px 60px rgba(28,43,58,0.2)"
@@ -83,7 +86,7 @@ function ServicePanelCard({
             fontSize: compact
               ? "clamp(1.2rem, 2vw, 1.5rem)"
               : "clamp(1.35rem, 2.5vw, 1.75rem)",
-            color: isCta ? "#ffffff" : "#1c2b3a",
+            color: isCta ? "#ffffff" : "var(--wordmark)",
             letterSpacing: "-0.02em",
           }}
         >
@@ -115,7 +118,7 @@ function ServicePanelCard({
                   className="font-heading font-semibold"
                   style={{
                     fontSize: "0.875rem",
-                    color: isCta ? "#fff" : "#1c2b3a",
+                    color: isCta ? "#fff" : "var(--wordmark)",
                   }}
                 >
                   {item.title}
@@ -157,24 +160,17 @@ function ServicePanelCard({
 
       {isCta && (
         <div className="mt-6 flex flex-wrap gap-3 shrink-0">
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-            style={{ backgroundColor: accent, color: "#ffffff" }}
+          <Button
+            href="/contact#consultation"
+            variant="mint"
+            size="md"
+            icon={<ArrowRight className="w-4 h-4" />}
           >
-            Book a Call
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-heading font-semibold text-sm transition-all duration-300"
-            style={{
-              color: "rgba(255,255,255,0.9)",
-              border: "1.5px solid rgba(255,255,255,0.25)",
-            }}
-          >
-            View Our Work
-          </Link>
+            {brandVoice.ctaPrimary}
+          </Button>
+          <Button href="/portfolio" variant="outlineDark" size="md">
+            {brandVoice.ctaCaseStudies}
+          </Button>
         </div>
       )}
     </div>
@@ -327,7 +323,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
             All Services
           </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -358,7 +354,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                       fontSize: "clamp(2rem, 5vw, 3.25rem)",
                       lineHeight: 1.08,
                       letterSpacing: "-0.025em",
-                      color: "#1c2b3a",
+                      color: "var(--wordmark)",
                     }}
                   >
                     {service.title}
@@ -370,7 +366,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                 className="font-heading font-semibold leading-snug"
                 style={{
                   fontSize: "clamp(1.125rem, 2.5vw, 1.375rem)",
-                  color: "#1c2b3a",
+                  color: "var(--wordmark)",
                   maxWidth: "36ch",
                 }}
               >
@@ -380,47 +376,78 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                 className="mt-4 leading-relaxed"
                 style={{
                   fontSize: "1.0625rem",
-                  color: "#4a6075",
+                  color: "var(--text-secondary)",
                   maxWidth: "52ch",
                 }}
               >
                 {service.description}
               </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button href="/contact#consultation" variant="primary" size="lg">
+                  {brandVoice.ctaPrimary}
+                </Button>
+                <Button href="/portfolio" variant="outline" size="lg">
+                  {brandVoice.ctaCaseStudies}
+                </Button>
+              </div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="lg:col-span-5 grid grid-cols-3 gap-4"
+              className="lg:col-span-5 flex flex-col gap-4 sm:gap-5 w-full"
             >
-              {service.stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl p-4 sm:p-5 text-center"
-                  style={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid var(--border-light)",
-                    boxShadow: "0 4px 20px rgba(30,90,152,0.06)",
-                  }}
-                >
-                  <p
-                    className="font-heading font-bold"
+              <div
+                className="relative w-full aspect-[16/10] sm:aspect-[5/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-white/95 border shrink-0"
+                style={{
+                  borderColor: "var(--border-light)",
+                  boxShadow: "0 8px 32px rgba(30,90,152,0.08)",
+                }}
+              >
+                <Image
+                  src={service.heroImage}
+                  alt={service.title}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  priority
+                  unoptimized={service.heroImage.endsWith(".gif")}
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                {service.stats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-2xl p-3 sm:p-5 text-center"
                     style={{
-                      fontSize: "clamp(1.5rem, 3vw, 2rem)",
-                      color: service.accent,
+                      backgroundColor: "#ffffff",
+                      border: "1px solid var(--border-light)",
+                      boxShadow: "0 4px 20px rgba(30,90,152,0.06)",
                     }}
                   >
-                    {stat.value}
-                  </p>
-                  <p
-                    className="mt-1 leading-tight"
-                    style={{ fontSize: "0.75rem", color: "#4a6075" }}
-                  >
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
+                    <p
+                      className="font-heading font-bold"
+                      style={{
+                        fontSize: "clamp(1.25rem, 2.5vw, 2rem)",
+                        color: service.accent,
+                      }}
+                    >
+                      {stat.value}
+                    </p>
+                    <p
+                      className="mt-1 leading-tight"
+                      style={{
+                        fontSize: "clamp(0.625rem, 1.5vw, 0.75rem)",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </div>
 
@@ -428,7 +455,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 1.8, repeat: Infinity }}
             className="flex items-center gap-2 mt-10 sm:mt-12"
-            style={{ color: "#4a6075" }}
+            style={{ color: "var(--text-secondary)" }}
           >
             <span className="text-xs uppercase tracking-widest font-heading font-semibold">
               Scroll down to explore
@@ -443,7 +470,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
         ref={sectionRef}
         className="relative"
         style={{
-          backgroundColor: "#f7fbfe",
+          backgroundColor: "var(--surface)",
           height: `${scrollSectionHeightVh}vh`,
         }}
         aria-label={`${service.title} details`}
@@ -462,7 +489,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
               style={{
                 width: "clamp(140px, 12vw, 200px)",
                 borderColor: "var(--border-light)",
-                backgroundColor: "#f7fbfe",
+                backgroundColor: "var(--surface)",
               }}
             >
               <p
@@ -536,7 +563,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
               </div>
 
               {/* Heading — fixed height, does not grow */}
-              <div className="shrink-0 pb-3 sm:pb-4" style={{ backgroundColor: "#f7fbfe" }}>
+              <div className="shrink-0 pb-3 sm:pb-4 bg-surface">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activePanel.id}
@@ -561,7 +588,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                         fontSize: "clamp(1.25rem, 4vw, 2.25rem)",
                         lineHeight: 1.12,
                         letterSpacing: "-0.02em",
-                        color: "#1c2b3a",
+                        color: "var(--wordmark)",
                         maxWidth: "22ch",
                       }}
                     >
@@ -570,7 +597,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                     {activePanel.subtitle && (
                       <p
                         className="mt-1.5 hidden sm:block"
-                        style={{ fontSize: "0.9375rem", color: "#4a6075" }}
+                        style={{ fontSize: "0.9375rem", color: "var(--text-secondary)" }}
                       >
                         {activePanel.subtitle}
                       </p>
@@ -593,7 +620,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                   </div>
                   <span
                     className="font-mono tabular-nums shrink-0"
-                    style={{ fontSize: "0.75rem", color: "#4a6075" }}
+                    style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}
                   >
                     {String(activeIndex + 1).padStart(2, "0")} /{" "}
                     {String(panelCount).padStart(2, "0")}
@@ -627,7 +654,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                   animate={{ x: [0, 6, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                   className="absolute bottom-3 right-4 sm:bottom-6 sm:right-8 flex items-center gap-2 pointer-events-none"
-                  style={{ color: "#4a6075" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   <span className="text-xs uppercase tracking-widest font-heading font-semibold">
                     Scroll
@@ -649,27 +676,16 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
         }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
-          <p style={{ fontSize: "0.9375rem", color: "#4a6075" }}>
+          <p style={{ fontSize: "0.9375rem", color: "var(--text-secondary)" }}>
             Explore more from 247 Digital Pro
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 font-heading font-semibold text-sm transition-all"
-              style={{
-                color: service.accent,
-                border: `1.5px solid ${service.accent}40`,
-              }}
-            >
-              All Services
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 font-heading font-semibold text-sm text-white transition-all hover:shadow-lg"
-              style={{ backgroundColor: service.accent }}
-            >
-              Get in Touch
-            </Link>
+            <Button href="/services" variant="outline" size="md">
+              {brandVoice.ctaServices}
+            </Button>
+            <Button href="/contact#consultation" variant="primary" size="md">
+              {brandVoice.ctaPrimary}
+            </Button>
           </div>
         </div>
       </section>

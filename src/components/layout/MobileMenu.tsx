@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { isNavItemActive } from "@/lib/nav";
+import { brandVoice } from "@/config/brand";
 import { mainNavItems } from "@/config/navigation";
 import { Button } from "@/components/ui/Button";
 
@@ -13,7 +16,24 @@ interface MobileMenuProps {
   onClose: () => void;
 }
 
+const mobileNavLinkClass = (active: boolean) =>
+  cn(
+    "block px-5 py-3 text-sm font-medium transition-colors",
+    active
+      ? "text-primary font-semibold bg-pale-blue/60"
+      : "text-slate hover:text-ink hover:bg-surface/80"
+  );
+
+const mobileChildLinkClass = (active: boolean) =>
+  cn(
+    "block px-8 py-2.5 text-sm transition-colors",
+    active
+      ? "text-primary font-semibold bg-pale-blue/40"
+      : "text-slate hover:text-ink"
+  );
+
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (label: string) => {
@@ -53,59 +73,80 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </div>
 
             <nav className="flex-1 overflow-y-auto py-3">
-              {mainNavItems.map((item) => (
-                <div key={item.href}>
-                  {item.children ? (
-                    <>
-                      <button
-                        onClick={() => toggleDropdown(item.label)}
-                        className="flex items-center justify-between w-full px-5 py-3 text-sm font-medium text-slate hover:text-ink transition-colors"
+              {mainNavItems.map((item) => {
+                const parentActive = isNavItemActive(
+                  pathname,
+                  item.href,
+                  item.children
+                );
+
+                return (
+                  <div key={item.href}>
+                    {item.children ? (
+                      <>
+                        <button
+                          onClick={() => toggleDropdown(item.label)}
+                          className={cn(
+                            "flex items-center justify-between w-full",
+                            mobileNavLinkClass(parentActive)
+                          )}
+                        >
+                          {item.label}
+                          <ChevronDown
+                            className={cn(
+                              "w-4 h-4 transition-transform duration-200",
+                              openDropdown === item.label && "rotate-180"
+                            )}
+                          />
+                        </button>
+
+                        <AnimatePresence>
+                          {openDropdown === item.label && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="bg-surface/50 py-1">
+                                {item.children.map((child) => {
+                                  const childActive = isNavItemActive(
+                                    pathname,
+                                    child.href
+                                  );
+                                  return (
+                                    <Link
+                                      key={child.href}
+                                      href={child.href}
+                                      onClick={onClose}
+                                      className={mobileChildLinkClass(childActive)}
+                                      aria-current={
+                                        childActive ? "page" : undefined
+                                      }
+                                    >
+                                      {child.label}
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={onClose}
+                        className={mobileNavLinkClass(parentActive)}
+                        aria-current={parentActive ? "page" : undefined}
                       >
                         {item.label}
-                        <ChevronDown
-                          className={cn(
-                            "w-4 h-4 transition-transform duration-200",
-                            openDropdown === item.label && "rotate-180"
-                          )}
-                        />
-                      </button>
-
-                      <AnimatePresence>
-                        {openDropdown === item.label && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="bg-surface/50 py-1">
-                              {item.children.map((child) => (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  onClick={onClose}
-                                  className="block px-8 py-2.5 text-sm text-slate hover:text-ink transition-colors"
-                                >
-                                  {child.label}
-                                </Link>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      onClick={onClose}
-                      className="block px-5 py-3 text-sm font-medium text-slate hover:text-ink transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  )}
-                </div>
-              ))}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
             </nav>
 
             <div className="p-5 border-t border-border-light space-y-3">
@@ -123,7 +164,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 size="md"
                 className="w-full"
               >
-                Get Started
+                {brandVoice.ctaPrimary}
               </Button>
             </div>
           </motion.div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
+
 export default function Error({
   error,
   reset,
@@ -15,12 +17,9 @@ export default function Error({
       <p className="text-slate mb-6 max-w-md">
         {error.message || "An unexpected error occurred. Please try again."}
       </p>
-      <button
-        onClick={reset}
-        className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors"
-      >
+      <Button type="button" variant="primary" size="md" onClick={reset}>
         Try Again
-      </button>
+      </Button>
     </div>
   );
 }

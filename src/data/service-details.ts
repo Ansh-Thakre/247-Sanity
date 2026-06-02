@@ -5,8 +5,11 @@ import {
   Palette,
   Bot,
   Users,
+  Search,
+  FileText,
 } from "lucide-react";
 import type { ServiceDetail } from "@/types/service-detail";
+import { getServiceHeroImage } from "@/data/service-images";
 
 const ctaPanel = (): ServiceDetail["panels"][number] => ({
     id: "cta",
@@ -31,10 +34,11 @@ export const serviceDetails: ServiceDetail[] = [
       "Strategic campaigns across search, social, and content that attract qualified leads and compound your brand's reach over time.",
     href: "/services/digital-marketing",
     icon: Megaphone,
+    heroImage: getServiceHeroImage("digital-marketing"),
     accent: "#1e5a98",
-    accentMuted: "#e8f0fb",
+    accentMuted: "#d6e8f8",
     heroGradient:
-      "linear-gradient(135deg, #e8f0fb 0%, #d4e8f7 40%, #f7fbfe 100%)",
+      "linear-gradient(135deg, #d6e8f8 0%, #f3f7fc 40%, #ffffff 100%)",
     stats: [
       { value: "3.2×", label: "Avg. ROAS uplift" },
       { value: "48%", label: "Lower cost per lead" },
@@ -118,10 +122,11 @@ export const serviceDetails: ServiceDetail[] = [
       "Custom websites, landing pages, and web applications engineered for performance, accessibility, and search visibility from day one.",
     href: "/services/web-development",
     icon: Globe,
-    accent: "#18c499",
+    heroImage: getServiceHeroImage("web-development"),
+    accent: "#1a9e80",
     accentMuted: "#d1f5ee",
     heroGradient:
-      "linear-gradient(135deg, #d1f5ee 0%, #eaf9f5 45%, #f7fbfe 100%)",
+      "var(--gradient-service-hero-mint)",
     stats: [
       { value: "99+", label: "Lighthouse scores" },
       { value: "40%", label: "Faster load times" },
@@ -205,10 +210,11 @@ export const serviceDetails: ServiceDetail[] = [
       "End-to-end SaaS development — discovery, UX, engineering, and launch — for CRM, ERP, and custom platforms your users will love.",
     href: "/services/saas-solutions",
     icon: Cloud,
-    accent: "#0f3d6e",
-    accentMuted: "#e8f0fb",
+    heroImage: getServiceHeroImage("saas-solutions"),
+    accent: "#0d1f3c",
+    accentMuted: "#d6e8f8",
     heroGradient:
-      "linear-gradient(135deg, #c5d9f0 0%, #e8f0fb 50%, #f7fbfe 100%)",
+      "linear-gradient(135deg, #d6e8f8 0%, #f3f7fc 50%, #ffffff 100%)",
     stats: [
       { value: "15+", label: "Products shipped" },
       { value: "6", label: "Avg. months to MVP" },
@@ -292,10 +298,11 @@ export const serviceDetails: ServiceDetail[] = [
       "Complete brand identity systems — logo, visual language, tone of voice, and guidelines — that make every touchpoint feel unmistakably yours.",
     href: "/services/branding",
     icon: Palette,
-    accent: "#f4a726",
-    accentMuted: "#faeeda",
+    heroImage: getServiceHeroImage("branding"),
+    accent: "#7dd4c0",
+    accentMuted: "#d1f5ee",
     heroGradient:
-      "linear-gradient(135deg, #faeeda 0%, #fff8ee 45%, #f7fbfe 100%)",
+      "linear-gradient(135deg, #d1f5ee 0%, #f3f7fc 45%, #ffffff 100%)",
     stats: [
       { value: "80+", label: "Brands crafted" },
       { value: "4", label: "Weeks avg. delivery" },
@@ -379,10 +386,11 @@ export const serviceDetails: ServiceDetail[] = [
       "Intelligent workflow automation, AI assistants, WhatsApp integration, and custom tools that eliminate repetitive work and unlock capacity.",
     href: "/services/ai-automation",
     icon: Bot,
-    accent: "#18c499",
+    heroImage: getServiceHeroImage("ai-automation"),
+    accent: "#1a9e80",
     accentMuted: "#d1f5ee",
     heroGradient:
-      "linear-gradient(135deg, #b8ede3 0%, #d1f5ee 40%, #f7fbfe 100%)",
+      "linear-gradient(135deg, #7dd4c0 0%, #d1f5ee 40%, #f3f7fc 100%)",
     stats: [
       { value: "60%", label: "Time saved on tasks" },
       { value: "24/7", label: "Automated support" },
@@ -466,10 +474,11 @@ export const serviceDetails: ServiceDetail[] = [
       "Custom CRM solutions that streamline sales pipelines, client management, and team collaboration — tailored to how your business actually works.",
     href: "/services/crm-systems",
     icon: Users,
-    accent: "#3a80c8",
-    accentMuted: "#e8f0fb",
+    heroImage: getServiceHeroImage("crm-systems"),
+    accent: "#2d6ab5",
+    accentMuted: "#d6e8f8",
     heroGradient:
-      "linear-gradient(135deg, #d4e4f7 0%, #e8f0fb 50%, #f7fbfe 100%)",
+      "linear-gradient(135deg, #d6e8f8 0%, #f3f7fc 50%, #ffffff 100%)",
     stats: [
       { value: "35%", label: "Faster deal cycles" },
       { value: "1", label: "Source of truth" },
@@ -539,6 +548,279 @@ export const serviceDetails: ServiceDetail[] = [
           "Real-time pipeline dashboards",
           "Automated follow-up sequences",
           "Integration with marketing & support tools",
+        ],
+      },
+      ctaPanel(),
+    ],
+  },
+  {
+    slug: "seo",
+    title: "SEO Optimization",
+    subtitle: "Organic Growth",
+    tagline: "Rank higher, attract qualified traffic",
+    description:
+      "Technical SEO, on-page strategy, and authority content that improves rankings and drives sustainable organic traffic — plus AEO and GEO for AI-powered search.",
+    href: "/services/seo",
+    icon: Search,
+    heroImage: getServiceHeroImage("seo"),
+    accent: "#1e5a98",
+    accentMuted: "#d6e8f8",
+    heroGradient:
+      "linear-gradient(135deg, #d6e8f8 0%, #f3f7fc 40%, #ffffff 100%)",
+    stats: [
+      { value: "90+", label: "Page-1 keywords" },
+      { value: "3×", label: "Avg. organic traffic lift" },
+      { value: "AEO/GEO", label: "AI search ready" },
+    ],
+    panels: [
+      {
+        id: "overview",
+        navLabel: "Overview",
+        title: "Search visibility that compounds",
+        subtitle: "Technical + content SEO",
+        body: "We fix what holds you back technically, strengthen on-page relevance, and publish authority content so Google — and AI answer engines — surface your brand when buyers are looking.",
+        bullets: [
+          {
+            title: "Full-site technical audits",
+            description:
+              "Crawlability, Core Web Vitals, schema, and indexation issues resolved with clear priorities.",
+          },
+          {
+            title: "Intent-matched content",
+            description:
+              "Topic clusters and landing pages aligned to how your audience actually searches.",
+          },
+        ],
+      },
+      {
+        id: "offerings",
+        navLabel: "Offerings",
+        title: "What we optimize",
+        subtitle: "Traditional & AI search",
+        list: [
+          "Technical SEO audits & fixes",
+          "Keyword research & content strategy",
+          "On-page optimization & internal linking",
+          "Link building & digital PR",
+          "AEO — Answer Engine Optimization",
+          "GEO — Generative Engine Optimization",
+          "Monthly ranking & traffic reporting",
+        ],
+      },
+      {
+        id: "process",
+        navLabel: "Process",
+        title: "How we grow organic",
+        subtitle: "Audit to authority",
+        bullets: [
+          {
+            title: "Baseline & roadmap",
+            description:
+              "Audit your site, competitors, and search landscape — then build a 90-day plan.",
+          },
+          {
+            title: "Implement & publish",
+            description:
+              "Technical fixes, on-page updates, and content production on a steady cadence.",
+          },
+          {
+            title: "Measure & refine",
+            description:
+              "Track rankings, traffic, and conversions — double down on what moves qualified leads.",
+          },
+        ],
+      },
+      {
+        id: "outcomes",
+        navLabel: "Outcomes",
+        title: "Traffic you can trust",
+        subtitle: "Qualified visitors",
+        body: "Our SEO work has helped clients move from page 3 to page 1 within 90 days. AEO ensures your business appears when AI tools answer your customers' questions.",
+        list: [
+          "Higher rankings for high-intent keywords",
+          "Improved domain authority over time",
+          "Visibility in AI-generated answers & summaries",
+        ],
+      },
+      ctaPanel(),
+    ],
+  },
+  {
+    slug: "social-media",
+    title: "Meta Ads",
+    subtitle: "Paid Social",
+    tagline: "Reach buyers where they scroll",
+    description:
+      "Facebook and Instagram campaigns with precise audience targeting, scroll-stopping creative, and continuous optimization to lower cost per lead.",
+    href: "/services/social-media",
+    icon: Megaphone,
+    heroImage: getServiceHeroImage("social-media"),
+    accent: "#2d6ab5",
+    accentMuted: "#d6e8f8",
+    heroGradient:
+      "linear-gradient(135deg, #d6e8f8 0%, #f3f7fc 45%, #ffffff 100%)",
+    stats: [
+      { value: "2.8×", label: "Avg. ROAS on Meta" },
+      { value: "35%", label: "Lower CPL vs. baseline" },
+      { value: "24/7", label: "Campaign monitoring" },
+    ],
+    panels: [
+      {
+        id: "overview",
+        navLabel: "Overview",
+        title: "Paid social that pays back",
+        subtitle: "Meta-first growth",
+        body: "We build and manage Meta ad campaigns that put your offer in front of the right people — then optimize creative, audiences, and budgets weekly so spend drives measurable leads.",
+        bullets: [
+          {
+            title: "Audience precision",
+            description:
+              "Lookalikes, retargeting, and interest stacks built from your CRM and site data.",
+          },
+          {
+            title: "Creative that converts",
+            description:
+              "Ad copy and visuals tested systematically — not one-and-done launches.",
+          },
+        ],
+      },
+      {
+        id: "offerings",
+        navLabel: "Offerings",
+        title: "Campaign capabilities",
+        subtitle: "Full Meta stack",
+        list: [
+          "Facebook & Instagram feed, story, and reel ads",
+          "Lead gen & conversion campaigns",
+          "Retargeting & funnel sequencing",
+          "Creative production & A/B testing",
+          "Pixel, CAPI & event tracking setup",
+          "Weekly performance reporting",
+        ],
+      },
+      {
+        id: "process",
+        navLabel: "Process",
+        title: "Launch to scale",
+        subtitle: "Test, learn, grow",
+        bullets: [
+          {
+            title: "Strategy & setup",
+            description:
+              "Account structure, tracking, and initial audience/creative hypotheses.",
+          },
+          {
+            title: "Test & optimize",
+            description:
+              "Rapid creative and audience tests with clear kill/scale rules.",
+          },
+          {
+            title: "Scale winners",
+            description:
+              "Increase budget on proven ad sets while protecting efficiency.",
+          },
+        ],
+      },
+      {
+        id: "outcomes",
+        navLabel: "Outcomes",
+        title: "Leads from social",
+        subtitle: "Measurable pipeline",
+        body: "Clients see more qualified form fills and booked calls — with full attribution from first click to closed deal when CRM is connected.",
+        list: [
+          "Lower cost per qualified lead over time",
+          "Creative library your team can reuse organically",
+          "Clear dashboards on spend, CPL, and ROAS",
+        ],
+      },
+      ctaPanel(),
+    ],
+  },
+  {
+    slug: "content-marketing",
+    title: "Content Creation",
+    subtitle: "Authority & Nurture",
+    tagline: "Content that builds trust and converts",
+    description:
+      "Blog posts, social content, video scripts, and lead magnets that build authority and nurture prospects from first touch to conversion.",
+    href: "/services/content-marketing",
+    icon: FileText,
+    heroImage: getServiceHeroImage("content-marketing"),
+    accent: "#1a9e80",
+    accentMuted: "#d1f5ee",
+    heroGradient: "var(--gradient-service-hero-mint)",
+    stats: [
+      { value: "200+", label: "Pieces published" },
+      { value: "4×", label: "Engagement uplift" },
+      { value: "SEO", label: "Built into every piece" },
+    ],
+    panels: [
+      {
+        id: "overview",
+        navLabel: "Overview",
+        title: "Content with a job to do",
+        subtitle: "Strategy-led production",
+        body: "Every article, post, and asset supports a business goal — awareness, authority, or conversion. We plan topics from search and buyer intent, then produce on a calendar your team can rely on.",
+        bullets: [
+          {
+            title: "Editorial planning",
+            description:
+              "Quarterly content maps tied to funnel stage, SEO targets, and campaigns.",
+          },
+          {
+            title: "On-brand execution",
+            description:
+              "Copy and visuals aligned to your voice — expert but approachable, outcome-focused.",
+          },
+        ],
+      },
+      {
+        id: "offerings",
+        navLabel: "Offerings",
+        title: "Content formats",
+        subtitle: "What we create",
+        list: [
+          "SEO blog posts & pillar pages",
+          "Social posts & carousels",
+          "Video scripts & short-form hooks",
+          "Lead magnets & downloadable guides",
+          "Email newsletters & nurture sequences",
+          "Case studies & customer stories",
+        ],
+      },
+      {
+        id: "process",
+        navLabel: "Process",
+        title: "From brief to publish",
+        subtitle: "Repeatable workflow",
+        bullets: [
+          {
+            title: "Plan",
+            description:
+              "Topic research, outlines, and approval before production begins.",
+          },
+          {
+            title: "Produce",
+            description:
+              "Writing, design, and revisions with clear turnaround times.",
+          },
+          {
+            title: "Distribute",
+            description:
+              "Publish, promote, and repurpose across site, social, and email.",
+          },
+        ],
+      },
+      {
+        id: "outcomes",
+        navLabel: "Outcomes",
+        title: "Authority that converts",
+        subtitle: "Long-term asset",
+        body: "Strong content compounds — rankings improve, sales cycles shorten, and prospects arrive already educated on your value.",
+        list: [
+          "Growing organic traffic from published articles",
+          "Consistent social presence without internal burnout",
+          "Assets sales and ads teams reuse in outreach",
         ],
       },
       ctaPanel(),

@@ -12,6 +12,9 @@ import {
   Check,
   ArrowRight,
 } from "lucide-react";
+import { BrandCTA } from "@/components/ui/BrandCTA";
+import { Button } from "@/components/ui/Button";
+import { brandVoice } from "@/config/brand";
 import { products, type ProductItem } from "@/data/products";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -33,36 +36,36 @@ const cardThemes = [
   },
   {
     bg: "#ffffff",
-    text: "#1c2b3a",
-    sub: "#4a6075",
-    iconBg: "#e8f0fb",
+    text: "#0f1e30",
+    sub: "#4e6580",
+    iconBg: "#d6e8f8",
     size: "small" as const,
   },
   {
-    bg: "#18c499",
+    bg: "#1a9e80",
     text: "#ffffff",
     sub: "rgba(255,255,255,0.82)",
     iconBg: "rgba(255,255,255,0.18)",
     size: "small" as const,
   },
   {
-    bg: "#0f3d6e",
+    bg: "#0d1f3c",
     text: "#ffffff",
     sub: "rgba(255,255,255,0.8)",
     iconBg: "rgba(255,255,255,0.12)",
     size: "large" as const,
   },
   {
-    bg: "#f4a726",
-    text: "#1c2b3a",
-    sub: "#3d3018",
-    iconBg: "rgba(255,255,255,0.35)",
+    bg: "#d1f5ee",
+    text: "#0d1f3c",
+    sub: "#4e6580",
+    iconBg: "rgba(30,90,152,0.12)",
     size: "large" as const,
   },
   {
-    bg: "#f7fbfe",
-    text: "#1c2b3a",
-    sub: "#4a6075",
+    bg: "#f3f7fc",
+    text: "#0f1e30",
+    sub: "#4e6580",
     iconBg: "#d1f5ee",
     size: "small" as const,
   },
@@ -90,8 +93,8 @@ function ProductCard({
       style={{
         backgroundColor: theme.bg,
         border:
-          theme.bg === "#ffffff" || theme.bg === "#f7fbfe"
-            ? "1px solid #e8f0fb"
+          theme.bg === "#ffffff" || theme.bg === "#f3f7fc"
+            ? "1px solid var(--border)"
             : "none",
       }}
     >
@@ -233,10 +236,7 @@ export default function ProductsPage() {
   return (
     <main ref={sectionRef} className="relative">
       {/* Fixed background — stays in place while cards scroll */}
-      <div
-        className="fixed inset-0 -z-10"
-        style={{ backgroundColor: "#edf2f8" }}
-      >
+      <div className="fixed inset-0 -z-10 bg-surface">
         <motion.div className="absolute inset-0" style={{ scale: bgScale }}>
           <div
             className="absolute rounded-full"
@@ -245,7 +245,7 @@ export default function ProductsPage() {
               height: 700,
               top: "-10%",
               right: "-8%",
-              backgroundColor: "#e0ecf7",
+              backgroundColor: "var(--pale-blue)",
               opacity: 0.6,
             }}
           />
@@ -256,7 +256,7 @@ export default function ProductsPage() {
               height: 500,
               bottom: "5%",
               left: "-5%",
-              backgroundColor: "#d6f0e9",
+              backgroundColor: "var(--brand-mint)",
               opacity: 0.4,
             }}
           />
@@ -271,8 +271,7 @@ export default function ProductsPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="font-heading font-semibold uppercase mb-4"
-              style={{ fontSize: "0.8125rem", letterSpacing: "0.1em", color: "#1e5a98" }}
+              className="text-overline mb-4"
             >
               Products &amp; Platforms
             </motion.p>
@@ -283,16 +282,16 @@ export default function ProductsPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="font-heading font-bold"
               style={{
-                color: "#1c2b3a",
+                color: "var(--wordmark)",
                 fontSize: "clamp(2.5rem, 6vw, 4.25rem)",
                 lineHeight: 1.06,
                 letterSpacing: "-0.025em",
               }}
             >
               Tools built to{" "}
-              <span style={{ color: "#1e5a98" }}>scale</span> your
+              <span className="text-primary">scale</span> your
               <br className="hidden sm:block" /> business{" "}
-              <span style={{ color: "#18c499" }}>effortlessly</span>
+              <span style={{ color: "var(--deep-mint)" }}>effortlessly</span>
             </motion.h1>
 
             <motion.p
@@ -300,7 +299,7 @@ export default function ProductsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-6 leading-relaxed max-w-2xl"
-              style={{ fontSize: "1.1875rem", color: "#4a6075" }}
+              style={{ fontSize: "1.1875rem", color: "var(--text-secondary)" }}
             >
               A suite of interconnected SaaS products designed to power every
               aspect of your business — from lead capture to final invoice.
@@ -312,21 +311,17 @@ export default function ProductsPage() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="mt-8 flex flex-wrap gap-4"
             >
-              <a
+              <Button
                 href="#products"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-                style={{ backgroundColor: "#1e5a98", color: "#ffffff" }}
+                variant="primary"
+                size="lg"
+                icon={<ArrowRight className="w-4 h-4" />}
               >
                 Explore Products
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-heading font-semibold text-sm transition-all duration-300 hover:shadow-md"
-                style={{ color: "#1c2b3a", border: "1.5px solid #b5d4f4" }}
-              >
+              </Button>
+              <Button href="/contact" variant="outline" size="lg">
                 Request a Demo
-              </a>
+              </Button>
             </motion.div>
           </div>
 
@@ -345,11 +340,11 @@ export default function ProductsPage() {
               <div key={stat.label}>
                 <p
                   className="font-heading font-bold"
-                  style={{ fontSize: "2rem", color: "#1c2b3a" }}
+                  style={{ fontSize: "2rem", color: "var(--wordmark)" }}
                 >
                   {stat.value}
                 </p>
-                <p style={{ fontSize: "0.875rem", color: "#4a6075" }}>
+                <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
                   {stat.label}
                 </p>
               </div>
@@ -366,10 +361,7 @@ export default function ProductsPage() {
             className="sticky z-20"
             style={{ top: 0 }}
           >
-            <div
-              className="pt-6 pb-5 lg:pt-32 lg:pb-0"
-              style={{ backgroundColor: "#edf2f8" }}
-            >
+            <div className="pt-6 pb-5 lg:pt-32 lg:pb-0 bg-surface">
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -379,11 +371,11 @@ export default function ProductsPage() {
                   fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)",
                   lineHeight: 1.1,
                   letterSpacing: "-0.02em",
-                  color: "#1c2b3a",
+                  color: "var(--wordmark)",
                 }}
               >
                 Our{" "}
-                <span style={{ color: "#1e5a98" }}>Products</span>
+                <span className="text-primary">Products</span>
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 16 }}
@@ -391,7 +383,7 @@ export default function ProductsPage() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
                 className="mt-3 leading-relaxed"
-                style={{ fontSize: "1rem", color: "#4a6075", maxWidth: "28ch" }}
+                style={{ fontSize: "1rem", color: "var(--text-secondary)", maxWidth: "28ch" }}
               >
                 Six interconnected tools that power your entire business workflow.
               </motion.p>
@@ -400,7 +392,7 @@ export default function ProductsPage() {
             <div
               className="h-6 lg:hidden"
               style={{
-                background: "linear-gradient(to bottom, #edf2f8, transparent)",
+                background: "linear-gradient(to bottom, var(--surface), transparent)",
               }}
             />
           </div>
@@ -417,49 +409,10 @@ export default function ProductsPage() {
       </section>
 
       {/* ========== BOTTOM CTA ========== */}
-      <section className="relative pb-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="rounded-3xl px-8 py-16 sm:px-16 sm:py-20 text-center"
-            style={{ backgroundColor: "#1c2b3a" }}
-          >
-            <h2
-              className="font-heading font-bold mb-4"
-              style={{ color: "#ffffff", fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
-            >
-              Ready to unify your operations?
-            </h2>
-            <p
-              className="max-w-xl mx-auto mb-8 leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.75)", fontSize: "1.0625rem" }}
-            >
-              Get started with any product individually, or bundle them together
-              for a fully integrated business ecosystem.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-                style={{ backgroundColor: "#18c499", color: "#ffffff" }}
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
-                href="/services"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-heading font-semibold text-sm transition-all duration-300"
-                style={{ color: "rgba(255,255,255,0.9)", border: "1.5px solid rgba(255,255,255,0.2)" }}
-              >
-                View All Services
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <BrandCTA
+        title="Ready to unify your marketing systems?"
+        description={brandVoice.ctaConsultation}
+      />
     </main>
   );
 }

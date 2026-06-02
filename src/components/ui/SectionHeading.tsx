@@ -24,9 +24,11 @@ export function SectionHeading({
       )}
     >
       {overline && <p className="text-overline mb-3">{overline}</p>}
-      <h2 className="font-heading font-bold text-ink">{title}</h2>
+      <h2 className="font-heading font-bold text-wordmark text-[clamp(1.75rem,4vw,2.25rem)] leading-tight">
+        {title}
+      </h2>
       {subtitle && (
-        <p className="mt-4 text-lg text-slate leading-relaxed">{subtitle}</p>
+        <p className="mt-4 text-lead text-slate leading-relaxed">{subtitle}</p>
       )}
     </div>
   );

@@ -3,42 +3,92 @@
 @import "../styles/animations.css";
 
 :root {
-  /* --- Primary --- */
-  --primary: #1e5a98;
-  --primary-dark: #0f3d6e;
-  --primary-light: #3a80c8;
+  /* --- Core brand (logo-derived, §02 logo anatomy) --- */
+  --deep-navy: #0d1f3c; /* icon background */
+  --primary: #1e5a98; /* 247 badge */
+  --wordmark: #1a3a5f; /* wordmark text */
+  --brand-mint: #d1f5ee;
 
-  /* --- Secondary --- */
-  --secondary: #18c499;
-  --secondary-light: #d1f5ee;
-  --secondary-dark: #0f6e56;
+  /* --- Extended palette --- */
+  --primary-dark: #0d1f3c;
+  --primary-light: #2d6ab5;
+  --pale-blue: #d6e8f8;
+  --mid-mint: #7dd4c0;
+  --deep-mint: #1a9e80;
 
-  /* --- Accent --- */
-  --accent: #f4a726;
-  --accent-light: #faeeda;
-  --accent-dark: #854f0b;
+  /* --- Semantic aliases --- */
+  --secondary: var(--deep-mint);
+  --secondary-light: var(--brand-mint);
+  --secondary-dark: var(--deep-mint);
 
-  /* --- Backgrounds & Surfaces --- */
-  --background: #f7fbfe;
-  --surface: #e8f0fb;
-  --surface-alt: #eaf9f5;
+  --accent: var(--mid-mint);
+  --accent-light: var(--brand-mint);
+  --accent-dark: var(--deep-mint);
+
+  /* --- Backgrounds & surfaces --- */
+  --background: #ffffff;
+  --surface: #f3f7fc;
+  --surface-alt: var(--brand-mint);
 
   /* --- Text --- */
-  --text-primary: #1c2b3a;
-  --text-secondary: #4a6075;
-  --text-disabled: #a8ccec;
+  --text-primary: #0f1e30;
+  --text-secondary: #4e6580;
+  --text-disabled: #a8c4dc;
   --text-on-dark: #ffffff;
 
-  /* --- Borders --- */
-  --border: #b5d4f4;
-  --border-light: #e8f0fb;
+  /* --- Borders & neutrals (§03) --- */
+  --cloud: #dce6f0;
+  --border: var(--cloud);
+  --border-light: var(--surface);
+
+  /* --- Brand gradients (pale-blue · mint · surface) --- */
+  --gradient-hero: linear-gradient(
+    180deg,
+    var(--pale-blue) 0%,
+    var(--surface) 100%
+  );
+  --gradient-story: linear-gradient(
+    180deg,
+    var(--pale-blue) 0%,
+    var(--brand-mint) 55%,
+    var(--surface) 100%
+  );
+  --gradient-services-page: linear-gradient(
+    180deg,
+    var(--brand-mint) 0%,
+    var(--surface) 50%,
+    var(--background) 100%
+  );
+  --gradient-service-hero: linear-gradient(
+    135deg,
+    var(--pale-blue) 0%,
+    var(--surface) 40%,
+    var(--background) 100%
+  );
+  --gradient-service-hero-mint: linear-gradient(
+    135deg,
+    var(--brand-mint) 0%,
+    var(--surface) 45%,
+    var(--background) 100%
+  );
+
+  /* --- Spacing scale (8pt grid) --- */
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
 }
 
 @theme inline {
   /* --- Colors --- */
+  --color-deep-navy: var(--deep-navy);
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
   --color-primary-light: var(--primary-light);
+  --color-wordmark: var(--wordmark);
 
   --color-secondary: var(--secondary);
   --color-secondary-light: var(--secondary-light);
@@ -47,6 +97,11 @@
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
   --color-accent-dark: var(--accent-dark);
+
+  --color-brand-mint: var(--brand-mint);
+  --color-pale-blue: var(--pale-blue);
+  --color-mid-mint: var(--mid-mint);
+  --color-deep-mint: var(--deep-mint);
 
   --color-background: var(--background);
   --color-surface: var(--surface);
@@ -57,20 +112,20 @@
   --color-disabled: var(--text-disabled);
   --color-on-dark: var(--text-on-dark);
 
+  --color-cloud: var(--cloud);
   --color-border: var(--border);
   --color-border-light: var(--border-light);
 
   /* --- Fonts --- */
-  --font-heading: var(--font-plus-jakarta-sans);
-  --font-body: var(--font-inter);
-  --font-mono: var(--font-fira-code);
+  --font-heading: var(--font-outfit);
+  --font-body: var(--font-nunito-sans);
 
-  /* --- Border Radius --- */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  /* --- Border radius (brand spec) --- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
   --radius-full: 9999px;
 }
 

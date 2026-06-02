@@ -1,10 +1,12 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
+import { brandVoice } from "@/config/brand";
 import { portfolioHighlights, type PortfolioItem } from "@/data/portfolio";
 
 export function PortfolioShowcase() {
@@ -24,18 +26,17 @@ export function PortfolioShowcase() {
         </div>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium border border-[#b5d4f4] text-[#1c2b3a] hover:bg-[#e8f0fb] transition-colors"
-          >
+          <Button href="/portfolio" variant="outline" size="md">
             View Full Portfolio
-          </Link>
-          <Link
+          </Button>
+          <Button
             href="/case-studies"
-            className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-[#1e5a98] hover:text-[#0f3d6e] transition-colors"
+            variant="primary"
+            size="md"
+            icon={<ArrowRight className="w-4 h-4" />}
           >
-            Read Case Studies <ArrowRight className="w-4 h-4" />
-          </Link>
+            {brandVoice.ctaCaseStudies}
+          </Button>
         </div>
       </Container>
     </section>
@@ -55,7 +56,7 @@ function PortfolioCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="group bg-white rounded-2xl border border-[#e8f0fb] overflow-hidden hover:shadow-lg transition-all duration-300"
+      className="group bg-white rounded-2xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300"
     >
       <div
         className={`h-44 bg-linear-to-br ${item.gradient} flex items-end p-5`}
@@ -66,18 +67,18 @@ function PortfolioCard({
       </div>
 
       <div className="p-5">
-        <h3 className="text-base font-heading font-semibold text-[#1c2b3a] mb-1.5">
+        <h3 className="text-base font-heading font-semibold text-ink mb-1.5">
           {item.title}
         </h3>
-        <p className="text-sm text-[#4a6075] leading-relaxed mb-4">
+        <p className="text-sm text-slate leading-relaxed mb-4">
           {item.description}
         </p>
 
-        <div className="flex items-baseline gap-2 pt-3 border-t border-[#e8f0fb]">
-          <span className="font-mono text-xl font-medium text-[#1e5a98]">
+        <div className="flex items-baseline gap-2 pt-3 border-t border-border">
+          <span className="font-mono text-xl font-medium text-primary">
             {item.metric}
           </span>
-          <span className="text-xs text-[#4a6075]">{item.metricLabel}</span>
+          <span className="text-xs text-slate">{item.metricLabel}</span>
         </div>
       </div>
     </motion.div>

@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { Logo } from "@/components/brand";
+import { logoAnatomy } from "@/config/logo";
 import { Container } from "@/components/layout/Container";
 import { Navbar } from "@/components/layout/Navbar";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import { BackToHome } from "@/components/layout/BackToHome";
+import { brandVoice } from "@/config/brand";
 import { Button } from "@/components/ui/Button";
 
 export function Header() {
@@ -33,19 +36,24 @@ export function Header() {
         <Container>
           <div className={cn(
             "flex items-center justify-between transition-all duration-500",
-            scrolled ? "h-16 py-2" : "h-[72px] py-3"
+            scrolled ? "h-[4.25rem] py-2" : "h-[4.75rem] py-3"
           )}>
-            <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <Image
-                src="/icon-247.png"
-                alt="247 Logo"
-                width={44}
-                height={44}
-                className="w-11 h-11 rounded-xl object-contain"
+            <BackToHome />
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <Logo
+                variant="light"
+                layout="icon"
+                size="lg"
+                href={null}
                 priority
+                className="!p-0"
               />
-              <span className="font-heading font-bold text-xl text-ink hidden sm:inline">
-                Digital <span className="text-primary">Pro</span>
+              <span
+                className="font-heading font-bold text-xl sm:text-[1.375rem] hidden sm:inline"
+                style={{ color: logoAnatomy.wordmark }}
+              >
+                Digital{" "}
+                <span style={{ color: logoAnatomy.badge }}>Pro</span>
               </span>
             </Link>
 
@@ -56,7 +64,7 @@ export function Header() {
                 Contact Us
               </Button>
               <Button href="/contact#consultation" variant="primary" size="sm">
-                Get Started
+                {brandVoice.ctaPrimary}
               </Button>
             </div>
 

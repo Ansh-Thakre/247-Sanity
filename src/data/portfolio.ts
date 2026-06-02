@@ -15,7 +15,7 @@ export const portfolioHighlights: PortfolioItem[] = [
       "Custom CRM for construction companies with estimation, scheduling, and proposal modules.",
     metric: "+280%",
     metricLabel: "Lead Conversion",
-    gradient: "from-[#1e5a98] to-[#0f3d6e]",
+    gradient: "from-primary to-deep-navy",
   },
   {
     title: "ShopVerse Ecommerce",
@@ -24,7 +24,7 @@ export const portfolioHighlights: PortfolioItem[] = [
       "Full-stack ecommerce platform with AI-powered recommendations and multi-vendor support.",
     metric: "3x",
     metricLabel: "Revenue Growth",
-    gradient: "from-[#18c499] to-[#0f6e56]",
+    gradient: "from-deep-mint to-primary-dark",
   },
   {
     title: "GreenLeaf Brand Identity",
@@ -33,7 +33,7 @@ export const portfolioHighlights: PortfolioItem[] = [
       "Complete brand identity redesign including logo, visual system, and packaging for eco brand.",
     metric: "+450%",
     metricLabel: "Brand Recall",
-    gradient: "from-[#f4a726] to-[#854f0b]",
+    gradient: "from-mid-mint to-deep-mint",
   },
   {
     title: "AutoFlow Marketing Suite",
@@ -42,6 +42,6 @@ export const portfolioHighlights: PortfolioItem[] = [
       "AI-powered marketing automation platform with email, SMS, and WhatsApp campaign management.",
     metric: "10M+",
     metricLabel: "Leads Generated",
-    gradient: "from-[#3a80c8] to-[#1e5a98]",
+    gradient: "from-primary-light to-primary",
   },
 ];

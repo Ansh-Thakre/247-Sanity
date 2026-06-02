@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { Logo } from "@/components/brand";
 import { Container } from "@/components/layout/Container";
 import { siteConfig } from "@/config/site";
 
@@ -8,12 +8,12 @@ const footerNav = [
   {
     title: "Services",
     links: [
-      { label: "Digital Marketing", href: "/services/digital-marketing" },
-      { label: "SEO Services", href: "/services/seo" },
-      { label: "Web Development", href: "/services/web-development" },
-      { label: "Branding & Creative", href: "/services/branding" },
-      { label: "AI & Automation", href: "/services/ai-automation" },
-      { label: "SaaS Solutions", href: "/services/saas-solutions" },
+      { label: "Brand Strategy", href: "/services/branding" },
+      { label: "Website Design", href: "/services/web-development" },
+      { label: "SEO Optimization", href: "/services/seo" },
+      { label: "Meta Ads", href: "/services/social-media" },
+      { label: "Google Ads", href: "/services/digital-marketing" },
+      { label: "Content Marketing", href: "/services/content-marketing" },
     ],
   },
   {
@@ -24,7 +24,6 @@ const footerNav = [
       { label: "Case Studies", href: "/case-studies" },
       { label: "Testimonials", href: "/testimonials" },
       { label: "Contact", href: "/contact" },
-      { label: "Careers", href: "/about" },
     ],
   },
   {
@@ -84,56 +83,53 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1c2b3a] text-white">
-      <div className="border-b border-white/10">
+    <footer className="bg-deep-navy text-on-dark">
+      <div className="border-b border-on-dark/10">
         <Container>
           <div className="py-14 md:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-8">
-            {/* Brand column */}
             <div className="lg:col-span-2">
-              <Link href="/" className="inline-flex items-center gap-2.5 mb-5">
-                <Image
-                  src="/icon-247.png"
-                  alt="247 Logo"
-                  width={44}
-                  height={44}
-                  className="w-11 h-11 rounded-xl object-contain"
+              <Link href="/" className="inline-flex items-center gap-3 mb-5">
+                <Logo
+                  variant="dark"
+                  layout="icon"
+                  size="lg"
+                  href={null}
+                  className="!p-0"
                 />
-                <span className="font-heading font-bold text-lg text-white">
-                  Digital <span className="text-[#3a80c8]">Pro</span>
+                <span className="font-heading font-bold text-xl text-on-dark">
+                  Digital <span className="text-mid-mint">Pro</span>
                 </span>
               </Link>
 
-              <p className="text-sm text-white/50 leading-relaxed max-w-xs mb-6">
-                {siteConfig.tagline}. Helping businesses modernize operations,
-                automate workflows, and accelerate growth.
+              <p className="text-sm text-on-dark/50 leading-relaxed max-w-xs mb-6">
+                {siteConfig.tagline} {siteConfig.description}
               </p>
 
               <div className="space-y-3">
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="flex items-center gap-2.5 text-sm text-white/60 hover:text-white transition-colors"
+                  className="flex items-center gap-2.5 text-sm text-on-dark/60 hover:text-on-dark transition-colors"
                 >
                   <Mail className="w-4 h-4 shrink-0" />
                   {siteConfig.email}
                 </a>
                 <a
                   href={`tel:${siteConfig.phone}`}
-                  className="flex items-center gap-2.5 text-sm text-white/60 hover:text-white transition-colors"
+                  className="flex items-center gap-2.5 text-sm text-on-dark/60 hover:text-on-dark transition-colors"
                 >
                   <Phone className="w-4 h-4 shrink-0" />
                   {siteConfig.phone}
                 </a>
-                <div className="flex items-start gap-2.5 text-sm text-white/60">
+                <div className="flex items-start gap-2.5 text-sm text-on-dark/60">
                   <MapPin className="w-4 h-4 shrink-0 mt-0.5" />
                   <span>123 Business Ave, Suite 100, New York, NY 10001</span>
                 </div>
               </div>
             </div>
 
-            {/* Nav columns */}
             {footerNav.map((group) => (
               <div key={group.title}>
-                <h3 className="font-heading font-semibold text-sm text-white mb-4">
+                <h3 className="font-heading font-semibold text-sm text-on-dark mb-4">
                   {group.title}
                 </h3>
                 <ul className="space-y-2.5">
@@ -142,12 +138,12 @@ export function Footer() {
                       {"href" in link ? (
                         <Link
                           href={link.href}
-                          className="text-sm text-white/50 hover:text-white transition-colors"
+                          className="text-sm text-on-dark/50 hover:text-on-dark transition-colors"
                         >
                           {link.label}
                         </Link>
                       ) : (
-                        <span className="text-sm text-white/50">
+                        <span className="text-sm text-on-dark/50">
                           {link.label}
                         </span>
                       )}
@@ -160,29 +156,28 @@ export function Footer() {
         </Container>
       </div>
 
-      {/* Bottom bar */}
       <Container>
         <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-on-dark/40">
             &copy; {currentYear} {siteConfig.name}. All rights reserved.
           </p>
 
           <div className="flex items-center gap-4">
             <Link
               href="/legal/privacy-policy"
-              className="text-xs text-white/40 hover:text-white/70 transition-colors"
+              className="text-xs text-on-dark/40 hover:text-on-dark/70 transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/legal/terms-of-service"
-              className="text-xs text-white/40 hover:text-white/70 transition-colors"
+              className="text-xs text-on-dark/40 hover:text-on-dark/70 transition-colors"
             >
               Terms of Service
             </Link>
             <Link
               href="/legal/cookie-policy"
-              className="text-xs text-white/40 hover:text-white/70 transition-colors"
+              className="text-xs text-on-dark/40 hover:text-on-dark/70 transition-colors"
             >
               Cookie Policy
             </Link>
@@ -196,7 +191,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:bg-white/10 hover:text-white transition-all"
+                className="w-8 h-8 rounded-lg bg-on-dark/5 flex items-center justify-center text-on-dark/40 hover:bg-on-dark/10 hover:text-on-dark transition-all"
               >
                 <svg
                   className="w-4 h-4"
@@ -215,7 +210,7 @@ export function Footer() {
             href="https://www.swarajyadigital.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-medium text-white/40 hover:text-white/70 transition-colors"
+            className="text-medium text-on-dark/40 hover:text-on-dark/70 transition-colors"
           >
             @Developed by Swarajya Digital
           </a>

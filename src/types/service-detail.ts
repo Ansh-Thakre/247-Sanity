@@ -28,6 +28,7 @@ export interface ServiceDetail {
   description: string;
   href: string;
   icon: LucideIcon;
+  heroImage: string;
   accent: string;
   accentMuted: string;
   heroGradient: string;
