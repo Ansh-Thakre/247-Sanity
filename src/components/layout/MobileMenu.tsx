@@ -151,10 +151,20 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
             <div className="p-5 border-t border-border-light space-y-3">
               <Button
+                href="/tools/seo-audit/"
+                variant="emphasis"
+                size="md"
+                className="w-full"
+                onClick={onClose}
+              >
+                {brandVoice.ctaAudit}
+              </Button>
+              <Button
                 href="/contact"
                 variant="outline"
                 size="md"
                 className="w-full"
+                onClick={onClose}
               >
                 Contact Us
               </Button>
@@ -163,6 +173,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 variant="primary"
                 size="md"
                 className="w-full"
+                onClick={onClose}
               >
                 {brandVoice.ctaPrimary}
               </Button>

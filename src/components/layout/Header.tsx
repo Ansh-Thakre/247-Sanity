@@ -59,8 +59,11 @@ export function Header() {
 
             <Navbar />
 
-            <div className="hidden lg:flex items-center gap-3">
-              <Button href="/contact" variant="outline" size="sm">
+            <div className="hidden lg:flex items-center gap-2 xl:gap-3">
+              <Button href="/tools/seo-audit/" variant="emphasis" size="sm">
+                {brandVoice.ctaAudit}
+              </Button>
+              <Button href="/contact" variant="outline" size="sm" className="hidden xl:inline-flex">
                 Contact Us
               </Button>
               <Button href="/contact#consultation" variant="primary" size="sm">

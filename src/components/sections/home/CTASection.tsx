@@ -7,7 +7,7 @@ import { brandVoice } from "@/config/brand";
 import { Button } from "@/components/ui/Button";
 
 const leadMagnets = [
-  { icon: Search, label: brandVoice.ctaAudit, href: "/contact#consultation" },
+  { icon: Search, label: brandVoice.ctaAudit, href: "/tools/seo-audit/" },
   {
     icon: LineChart,
     label: "Growth Strategy Session",

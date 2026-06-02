@@ -33,6 +33,7 @@ const footerNav = [
       { label: "Guides", href: "/resources/guides" },
       { label: "Whitepapers", href: "/resources/whitepapers" },
       { label: "Tools", href: "/tools" },
+      { label: "Free Website Audit", href: "/tools/seo-audit" },
       { label: "FAQ", href: "/support/faq" },
       { label: "Support", href: "/support" },
     ],
