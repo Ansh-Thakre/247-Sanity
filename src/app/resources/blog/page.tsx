@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
@@ -10,18 +10,19 @@ import { BrandCTA } from "@/components/ui/BrandCTA";
 import { BlogCard } from "@/components/sections/resources/BlogCard";
 import { allPosts } from "@/data/blog-posts";
 
-const categories = [
-  "All",
-  ...Array.from(new Set(allPosts.map((p) => p.category))).sort(),
-];
-
 export default function BlogPage() {
+  const posts = allPosts;
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(posts.map((p) => p.category))).sort()],
+    [posts],
+  );
+
   const [activeCategory, setActiveCategory] = useState("All");
   const [query, setQuery] = useState("");
 
   const filteredPosts = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return allPosts.filter((post) => {
+    return posts.filter((post) => {
       const matchesCategory =
         activeCategory === "All" || post.category === activeCategory;
       const matchesQuery =
@@ -31,7 +32,7 @@ export default function BlogPage() {
         post.category.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, query]);
+  }, [activeCategory, query, posts]);
 
   return (
     <>
@@ -88,7 +89,7 @@ export default function BlogPage() {
                     "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-colors",
                     activeCategory === category
                       ? "bg-primary text-white"
-                      : "bg-white text-slate border border-border hover:text-ink hover:border-primary/30"
+                      : "bg-white text-slate border border-border hover:text-ink hover:border-primary/30",
                   )}
                 >
                   {category}

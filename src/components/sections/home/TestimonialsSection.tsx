@@ -72,16 +72,16 @@ function TestimonialCard({
 }
 
 /* ─── Mobile Swiper ─── */
-function MobileSwiper() {
+function MobileSwiper({ testimonials }: { testimonials: Testimonial[] }) {
   const [current, setCurrent] = useState(0);
 
   const prev = useCallback(
     () => setCurrent((c) => (c === 0 ? testimonials.length - 1 : c - 1)),
-    []
+    [testimonials.length],
   );
   const next = useCallback(
     () => setCurrent((c) => (c === testimonials.length - 1 ? 0 : c + 1)),
-    []
+    [testimonials.length],
   );
 
   return (
@@ -156,31 +156,33 @@ function MobileSwiper() {
 
 /* ─── Build pages of 4 from testimonials ─── */
 const CARDS_PER_PAGE = 4;
-const totalPages = Math.ceil(testimonials.length / CARDS_PER_PAGE);
 const AUTO_INTERVAL = 5000;
 
-function getPage(page: number) {
-  const start = page * CARDS_PER_PAGE;
+function getPage(page: number, testimonials: Testimonial[]) {
+  const totalPages = Math.max(1, Math.ceil(testimonials.length / CARDS_PER_PAGE));
+  const safePage = page % totalPages;
+  const start = safePage * CARDS_PER_PAGE;
   const items = testimonials.slice(start, start + CARDS_PER_PAGE);
-  while (items.length < CARDS_PER_PAGE) {
+  while (items.length < CARDS_PER_PAGE && testimonials.length > 0) {
     items.push(testimonials[items.length % testimonials.length]);
   }
   return { left: [items[0], items[1]], right: [items[2], items[3]] };
 }
 
 /* ─── Desktop Bento Layout ─── */
-function DesktopLayout() {
+function DesktopLayout({ testimonials }: { testimonials: Testimonial[] }) {
+  const totalPages = Math.max(1, Math.ceil(testimonials.length / CARDS_PER_PAGE));
   const [page, setPage] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const hoveringRef = useRef(false);
 
   const goNext = useCallback(
     () => setPage((p) => (p + 1) % totalPages),
-    []
+    [totalPages],
   );
   const goPrev = useCallback(
     () => setPage((p) => (p === 0 ? totalPages - 1 : p - 1)),
-    []
+    [totalPages],
   );
 
   const startAutoPlay = useCallback(() => {
@@ -190,7 +192,7 @@ function DesktopLayout() {
         setPage((p) => (p + 1) % totalPages);
       }
     }, AUTO_INTERVAL);
-  }, []);
+  }, [totalPages]);
 
   useEffect(() => {
     startAutoPlay();
@@ -208,7 +210,7 @@ function DesktopLayout() {
     startAutoPlay();
   };
 
-  const { left, right } = getPage(page);
+  const { left, right } = getPage(page, testimonials);
 
   return (
     <div
@@ -317,8 +319,8 @@ export function TestimonialsSection() {
   return (
     <section className="py-16 md:py-24 bg-brand-mint overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <DesktopLayout />
-        <MobileSwiper />
+        <DesktopLayout testimonials={testimonials} />
+        <MobileSwiper testimonials={testimonials} />
       </div>
     </section>
   );

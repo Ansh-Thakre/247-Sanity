@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -31,70 +31,71 @@ function PortfolioCard({
         href={project.href}
         className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-[0_2px_20px_rgba(30,90,152,0.06)] transition-all duration-500 hover:border-primary/30 hover:shadow-[0_8px_40px_rgba(30,90,152,0.12)]"
       >
-      <div className="relative h-48 overflow-hidden sm:h-56">
-        {!imageError && (
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 640px) 100vw, 50vw"
-            onError={() => setImageError(true)}
-          />
-        )}
-        <div className="absolute inset-0 bg-linear-to-t from-deep-navy/70 via-deep-navy/10 to-transparent" />
+        <div className="relative h-48 overflow-hidden sm:h-56">
+          {!imageError && project.image && (
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, 50vw"
+              onError={() => setImageError(true)}
+            />
+          )}
+          <div className="absolute inset-0 bg-linear-to-t from-deep-navy/70 via-deep-navy/10 to-transparent" />
 
-        <div className="absolute left-5 top-5 z-10">
-          <span className="inline-block rounded-full bg-white/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm">
-            {project.category}
-          </span>
-        </div>
-
-        <div className="absolute bottom-5 left-5 right-5 z-10 flex items-end justify-between gap-3">
-          <p className="font-heading text-xs font-bold uppercase tracking-[0.15em] text-white/80">
-            {project.client}
-          </p>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors group-hover:bg-white group-hover:text-primary">
-            <ArrowUpRight className="h-4 w-4" />
-          </span>
-        </div>
-      </div>
-
-      <div className="flex flex-1 flex-col p-6">
-        <h3 className="mb-2 font-heading text-lg font-bold text-ink transition-colors group-hover:text-primary">
-          {project.title}
-        </h3>
-        <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-slate">
-          {project.description}
-        </p>
-
-        <div className="mb-5 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-pale-blue px-2.5 py-1 text-[11px] font-medium text-primary"
-            >
-              {tag}
+          <div className="absolute left-5 top-5 z-10">
+            <span className="inline-block rounded-full bg-white/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm">
+              {project.category}
             </span>
-          ))}
+          </div>
+
+          <div className="absolute bottom-5 left-5 right-5 z-10 flex items-end justify-between gap-3">
+            <p className="font-heading text-xs font-bold uppercase tracking-[0.15em] text-white/80">
+              {project.client}
+            </p>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors group-hover:bg-white group-hover:text-primary">
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
+          </div>
         </div>
 
-        <div className="mt-auto flex items-baseline gap-2 border-t border-border pt-4">
-          <span
-            className="font-mono text-2xl font-bold"
-            style={{ color: project.accent }}
-          >
-            {project.metric}
-          </span>
-          <span className="text-xs text-slate">{project.metricLabel}</span>
+        <div className="flex flex-1 flex-col p-6">
+          <h3 className="mb-2 font-heading text-lg font-bold text-ink transition-colors group-hover:text-primary">
+            {project.title}
+          </h3>
+          <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-slate">
+            {project.description}
+          </p>
+
+          <div className="mb-5 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-pale-blue px-2.5 py-1 text-[11px] font-medium text-primary"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-auto flex items-baseline gap-2 border-t border-border pt-4">
+            <span
+              className="font-mono text-2xl font-bold"
+              style={{ color: project.accent }}
+            >
+              {project.metric}
+            </span>
+            <span className="text-xs text-slate">{project.metricLabel}</span>
+          </div>
         </div>
-      </div>
       </Link>
     </motion.div>
   );
 }
 
 export default function PortfolioPage() {
+  const projects = portfolioProjects;
   return (
     <main className="relative">
       <div className="fixed inset-0 -z-10 bg-surface">
@@ -157,8 +158,8 @@ export default function PortfolioPage() {
           </div>
 
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8">
-            {portfolioProjects.map((project, index) => (
-              <PortfolioCard key={project.title} project={project} index={index} />
+            {projects.map((project, index) => (
+              <PortfolioCard key={project.slug} project={project} index={index} />
             ))}
           </div>
         </Container>

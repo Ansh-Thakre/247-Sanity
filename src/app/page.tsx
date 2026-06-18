@@ -2,7 +2,6 @@ import {
   HeroSection,
   TrustMetricsSection,
   ServicesOverview,
-  IndustrySolutions,
   WhyChooseUs,
   ProductEcosystem,
   WorkflowProcess,
@@ -30,9 +29,6 @@ export default function Home() {
       <TrustMetricsSection />
       <SectionSeparator />
       <ServicesOverview />
-      <SectionSeparator />
-      {/* Industry Solutions   <IndustrySolutions />*/}
-     
       <SectionSeparator />
       <WhyChooseUs />
       <SectionSeparator />

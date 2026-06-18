@@ -1,10 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
   images: {
+    // Hostinger-compatible: avoids native sharp dependency issues on some Node hosts.
     unoptimized: true,
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        pathname: "/**",
+      },
       {
         protocol: "https",
         hostname: "cdn.jsdelivr.net",

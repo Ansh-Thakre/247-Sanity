@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
@@ -11,19 +11,20 @@ import { GuideCard } from "@/components/sections/resources/GuideCard";
 import { GuideDetailModal } from "@/components/sections/resources/GuideDetailModal";
 import { allGuides, type GuidePreview } from "@/data/guides";
 
-const categories = [
-  "All",
-  ...Array.from(new Set(allGuides.map((g) => g.category))).sort(),
-];
-
 export default function GuidesPage() {
+  const guides = allGuides;
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(guides.map((g) => g.category))).sort()],
+    [guides],
+  );
+
   const [activeCategory, setActiveCategory] = useState("All");
   const [query, setQuery] = useState("");
   const [selectedGuide, setSelectedGuide] = useState<GuidePreview | null>(null);
 
   const filteredGuides = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return allGuides.filter((guide) => {
+    return guides.filter((guide) => {
       const matchesCategory =
         activeCategory === "All" || guide.category === activeCategory;
       const matchesQuery =
@@ -34,7 +35,7 @@ export default function GuidesPage() {
         guide.difficulty.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, query]);
+  }, [activeCategory, query, guides]);
 
   return (
     <>
@@ -91,7 +92,7 @@ export default function GuidesPage() {
                     "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-colors",
                     activeCategory === category
                       ? "bg-primary text-white"
-                      : "bg-white text-slate border border-border hover:text-ink hover:border-primary/30"
+                      : "bg-white text-slate border border-border hover:text-ink hover:border-primary/30",
                   )}
                 >
                   {category}
