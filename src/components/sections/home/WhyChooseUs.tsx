@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Button } from "@/components/ui/Button";
+import { BookStrategyCallButton } from "@/components/ui/BookStrategyCallButton";
 import { motion } from "framer-motion";
 import { brandVoice } from "@/config/brand";
 import {
@@ -17,42 +17,42 @@ const differentiators = [
     icon: Target,
     title: "Outcome-Focused",
     description:
-      "We lead with results — leads, revenue, and growth. Every strategy connects back to what you actually gain.",
+      "Every strategy ties back to leads, revenue, and measurable growth.",
     color: "#1e5a98",
   },
   {
     icon: Monitor,
     title: "Strategy + Execution",
     description:
-      "We don't just plan — we execute together. One team for strategy, creative, SEO, and paid media.",
+      "One team from planning through creative, SEO, and paid media.",
     color: "#1a9e80",
   },
   {
     icon: Bot,
     title: "AEO & GEO Ready",
     description:
-      "AEO ensures your business appears when AI tools answer your customers' questions — not just on page one of Google.",
+      "Visible in AI-powered search — not just traditional rankings.",
     color: "#2d6ab5",
   },
   {
     icon: TrendingUp,
     title: "Data-Backed Confidence",
     description:
-      "Qualified leads, measurable growth, and clear accountability — specific beats general every time.",
+      "Qualified leads and clear accountability — specific beats general.",
     color: "#1e5a98",
   },
   {
     icon: Building2,
     title: "Clear & Jargon-Free",
     description:
-      "Plain, direct language on timelines, channels, and ROI. We explain AEO, GEO, and SEO in business terms.",
+      "Plain language on timelines, channels, and ROI — no buzzwords.",
     color: "#1a9e80",
   },
   {
     icon: Layers,
     title: "Strategic Partner",
     description:
-      "We're not a vendor — we're an invested partner. Collaborative tone, shared goals, and transparent reporting.",
+      "An invested partner with shared goals and transparent reporting.",
     color: "#1a3a5f",
   },
 ];
@@ -80,9 +80,7 @@ export function WhyChooseUs() {
             </h2>
             <p className="mt-5 text-slate text-lead">{brandVoice.partnerLine}</p>
             <div className="mt-8">
-              <Button href="/contact#consultation" variant="primary" size="lg">
-                {brandVoice.ctaPrimary}
-              </Button>
+              <BookStrategyCallButton variant="primary" size="lg" />
             </div>
           </motion.div>
 

@@ -54,14 +54,15 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
 
   return (
     <div className="relative group">
-      <Link
-        href={item.href}
+      <button
+        type="button"
         className={cn("flex items-center gap-1", navLinkClass(active))}
         aria-current={active ? "page" : undefined}
+        aria-haspopup="true"
       >
         {item.label}
         <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" />
-      </Link>
+      </button>
 
       <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
         <div className="bg-white rounded-xl shadow-lg border border-border-light py-2 min-w-[220px]">

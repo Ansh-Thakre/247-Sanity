@@ -315,7 +315,7 @@ function DesktopLayout() {
 /* ─── Main Export ─── */
 export function TestimonialsSection() {
   return (
-    <section className="py-16 md:py-24 bg-surface overflow-hidden">
+    <section className="py-16 md:py-24 bg-brand-mint overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <DesktopLayout />
         <MobileSwiper />

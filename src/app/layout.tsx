@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Outfit, Nunito_Sans } from "next/font/google";
 import { Header, Footer } from "@/components/layout";
+import { AppProviders } from "@/components/layout/AppProviders";
+import { INTRO_PREFLIGHT_ID, introBlockScript } from "@/config/intro";
 import { logoAssets } from "@/config/logo";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
@@ -44,10 +47,18 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${nunitoSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <div id={INTRO_PREFLIGHT_ID} suppressHydrationWarning aria-hidden />
+        <Script
+          id="intro-block"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: introBlockScript }}
+        />
+        <AppProviders>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AppProviders>
       </body>
     </html>
   );

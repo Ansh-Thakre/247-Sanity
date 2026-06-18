@@ -12,8 +12,10 @@ import { MobileMenu } from "@/components/layout/MobileMenu";
 import { BackToHome } from "@/components/layout/BackToHome";
 import { brandVoice } from "@/config/brand";
 import { Button } from "@/components/ui/Button";
+import { useStrategyCall } from "@/components/layout/StrategyCallPopup";
 
 export function Header() {
+  const { openStrategyCall } = useStrategyCall();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -60,13 +62,10 @@ export function Header() {
             <Navbar />
 
             <div className="hidden lg:flex items-center gap-2 xl:gap-3">
-              <Button href="/tools/seo-audit/" variant="emphasis" size="sm">
+              {/* <Button href="/tools/seo-audit/" variant="emphasis" size="sm">
                 {brandVoice.ctaAudit}
-              </Button>
-              <Button href="/contact" variant="outline" size="sm" className="hidden xl:inline-flex">
-                Contact Us
-              </Button>
-              <Button href="/contact#consultation" variant="primary" size="sm">
+              </Button> */}
+              <Button variant="primary" size="sm" onClick={openStrategyCall}>
                 {brandVoice.ctaPrimary}
               </Button>
             </div>

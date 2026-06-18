@@ -10,6 +10,7 @@ import { isNavItemActive } from "@/lib/nav";
 import { brandVoice } from "@/config/brand";
 import { mainNavItems } from "@/config/navigation";
 import { Button } from "@/components/ui/Button";
+import { useStrategyCall } from "@/components/layout/StrategyCallPopup";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ const mobileChildLinkClass = (active: boolean) =>
   );
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const { openStrategyCall } = useStrategyCall();
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -150,7 +152,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </nav>
 
             <div className="p-5 border-t border-border-light space-y-3">
-              <Button
+              {/* <Button
                 href="/tools/seo-audit/"
                 variant="emphasis"
                 size="md"
@@ -158,22 +160,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 onClick={onClose}
               >
                 {brandVoice.ctaAudit}
-              </Button>
+              </Button> */}
               <Button
-                href="/contact"
-                variant="outline"
-                size="md"
-                className="w-full"
-                onClick={onClose}
-              >
-                Contact Us
-              </Button>
-              <Button
-                href="/contact#consultation"
                 variant="primary"
                 size="md"
                 className="w-full"
-                onClick={onClose}
+                onClick={() => {
+                  onClose();
+                  openStrategyCall();
+                }}
               >
                 {brandVoice.ctaPrimary}
               </Button>

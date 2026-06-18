@@ -1,44 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Hammer,
-  Heart,
-  Store,
-  BookOpen,
-  Building2,
-  Rocket,
-} from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { industries } from "@/data/industries";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  hammer: Hammer,
-  heart: Heart,
-  store: Store,
-  "book-open": BookOpen,
-  "building-2": Building2,
-  rocket: Rocket,
-};
-
-const brandCard = {
-  bg: "#f3f7fc",
-  text: "#0f1e30",
-  sub: "#4e6580",
-  iconBg: "#d6e8f8",
-  iconColor: "#1e5a98",
-};
-
-const iconAccents: Record<string, string> = {
-  hammer: "#1a9e80",
-  heart: "#1e5a98",
-  store: "#2d6ab5",
-  "book-open": "#1a3a5f",
-  "building-2": "#7dd4c0",
-  rocket: "#1a9e80",
-};
+const CARD_GRADIENT = "from-primary/20 via-pale-blue to-deep-mint/20";
 
 export function IndustrySolutions() {
   return (
@@ -67,9 +37,8 @@ function IndustryCard({
   item: (typeof industries)[number];
   index: number;
 }) {
-  const Icon = iconMap[item.icon];
-  const card = brandCard;
-  const iconColor = iconAccents[item.icon] ?? brandCard.iconColor;
+  const [imageError, setImageError] = useState(false);
+  const showImage = Boolean(item.image) && !imageError;
 
   return (
     <motion.div
@@ -80,24 +49,29 @@ function IndustryCard({
     >
       <Link
         href={item.href}
-        className="group block rounded-xl p-6 border border-border transition-all duration-300 hover:shadow-lg hover:border-primary/20"
-        style={{ backgroundColor: card.bg }}
+        className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white transition-all duration-300 hover:border-primary/30 hover:shadow-[0_8px_40px_rgba(30,90,152,0.12)]"
       >
         <div
-          className="w-11 h-11 rounded-lg flex items-center justify-center mb-4"
-          style={{ backgroundColor: card.iconBg, color: iconColor }}
+          className={`relative h-44 w-full overflow-hidden bg-linear-to-br sm:h-48 ${CARD_GRADIENT}`}
         >
-          {Icon && <Icon className="w-5 h-5" />}
+          {showImage && (
+            <Image
+              src={item.image}
+              alt={item.title}
+              fill
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              onError={() => setImageError(true)}
+            />
+          )}
+          <div className="absolute inset-0 bg-linear-to-t from-deep-navy/50 via-transparent to-transparent" />
         </div>
-        <h3
-          className="font-heading font-semibold text-lg mb-2"
-          style={{ color: card.text }}
-        >
-          {item.title}
-        </h3>
-        <p className="text-sm leading-relaxed" style={{ color: card.sub }}>
-          {item.description}
-        </p>
+
+        <div className="p-5 sm:p-6">
+          <h3 className="font-heading text-lg font-semibold text-wordmark transition-colors group-hover:text-primary">
+            {item.title}
+          </h3>
+        </div>
       </Link>
     </motion.div>
   );

@@ -6,7 +6,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     title: "Brand Strategy",
     description:
       "Positioning, identity, and messaging systems that differentiate you in your market and build lasting authority.",
-    icon: "circle-alert",
+    icon: "palette",
     href: "/services/branding",
     badge: "CORE",
   },
@@ -14,7 +14,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     title: "Website Design",
     description:
       "Conversion-focused websites designed for qualified lead generation, authority, and seamless user experience.",
-    icon: "monitor",
+    icon: "globe",
     href: "/services/web-development",
     badge: "CORE",
   },
@@ -22,7 +22,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     title: "SEO Optimization",
     description:
       "Technical SEO, on-page strategy, and authority content that improves rankings and drives organic traffic.",
-    icon: "activity",
+    icon: "search",
     href: "/services/seo",
     badge: "CORE",
   },
@@ -38,7 +38,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     title: "Google Ads",
     description:
       "Search, display, and Performance Max campaigns that capture high-intent demand and maximize ad spend ROI.",
-    icon: "search",
+    icon: "bar-chart-3",
     href: "/services/digital-marketing",
     badge: "CORE",
   },
@@ -46,7 +46,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     title: "AEO — Answer Engine Optimization",
     description:
       "Structured content strategy to appear in AI-generated answers on ChatGPT, Perplexity, and voice search.",
-    icon: "message-square",
+    icon: "bot",
     href: "/services/seo",
     badge: "NEW",
   },
@@ -54,7 +54,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     title: "GEO — Generative Engine Optimization",
     description:
       "Optimization for AI-powered search engines (Google SGE, Bing Copilot) to ensure brand visibility in AI-generated results.",
-    icon: "globe",
+    icon: "sparkles",
     href: "/services/seo",
     badge: "NEW",
   },
@@ -70,7 +70,7 @@ export const servicesOverview: ServiceOverviewItem[] = [
     title: "Performance Analytics",
     description:
       "KPI dashboards, attribution reporting, and continuous optimization — strategy driven by real data, not guesswork.",
-    icon: "briefcase",
+    icon: "trending-up",
     href: "/services/digital-marketing",
     badge: "CORE",
   },

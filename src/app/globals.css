@@ -136,3 +136,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Homepage intro — blocks any flash before React mounts the loader */
+#intro-preflight:not([data-active]) {
+  display: none;
+}
+
+body:has(#intro-preflight[data-active]) {
+  overflow: hidden;
+}
+
+#intro-preflight[data-active] {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--surface);
+  pointer-events: all;
+}

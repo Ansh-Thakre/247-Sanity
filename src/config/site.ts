@@ -7,7 +7,9 @@ export const siteConfig = {
   mission:
     "Empower entrepreneurs and small businesses to scale with clear strategy, proven marketing systems, and measurable growth — without carrying the burden alone.",
   url: "https://247digitalpro.com",
-  email: "hello@247digital.com",
-  phone: "+1 (234) 567-890",
+  email: "info@atlantic-awning.com",
+  phone: "(774) 813-0053",
+  phoneTel: "+17748130053",
   experienceYears: "15+",
+  ctaBackgroundImage: "/images/backgrounds/CTA section.webp",
 } as const;

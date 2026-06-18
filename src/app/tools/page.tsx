@@ -5,6 +5,7 @@ import { FileText, Globe, LogIn, Share2 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { BrandedPageHero } from "@/components/layout/BrandedPageHero";
 import { Button } from "@/components/ui/Button";
+import { BookStrategyCallButton } from "@/components/ui/BookStrategyCallButton";
 import { useAuth } from "@/contexts/AuthContext";
 import { brandVoice } from "@/config/brand";
 
@@ -87,9 +88,7 @@ export default function ToolsHubPage() {
           <p className="text-sm text-white/80 max-w-lg mx-auto mb-6">
             {brandVoice.ctaConsultation}
           </p>
-          <Button href="/contact#consultation" variant="mint" size="lg">
-            {brandVoice.ctaPrimary}
-          </Button>
+          <BookStrategyCallButton variant="mint" size="lg" />
         </div>
       </Container>
     </>

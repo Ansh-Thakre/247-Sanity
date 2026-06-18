@@ -3,6 +3,7 @@ export { TrustMetricsSection } from "./TrustMetricsSection";
 export { ServicesOverview } from "./ServicesOverview";
 export { IndustrySolutions } from "./IndustrySolutions";
 export { WhyChooseUs } from "./WhyChooseUs";
+export { ProductPlatformsIntro } from "./ProductPlatformsIntro";
 export { ProductEcosystem } from "./ProductEcosystem";
 export { WorkflowProcess } from "./WorkflowProcess";
 export { ProcessSteps } from "@/components/sections/shared/ProcessSteps";

@@ -82,26 +82,26 @@ function StoryCards() {
 
         {/* Mission + Vision */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="rounded-2xl p-6 md:p-7 shadow-lg bg-primary">
-            <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-4 bg-white/15">
-              <Lightbulb className="w-5 h-5 md:w-6 md:h-6 text-on-dark" />
+          <div className="rounded-2xl p-6 md:p-7 shadow-lg border border-border bg-white">
+            <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-4 bg-pale-blue">
+              <Lightbulb className="w-5 h-5 md:w-6 md:h-6 text-primary" />
             </div>
-            <h3 className="font-heading font-bold text-xl md:text-[1.375rem] text-on-dark mb-2 md:mb-3">
+            <h3 className="font-heading font-bold text-xl md:text-[1.375rem] text-wordmark mb-2 md:mb-3">
               Mission
             </h3>
-            <p className="text-base leading-relaxed text-on-dark/90">
+            <p className="text-base leading-relaxed text-slate">
               {siteConfig.mission}
             </p>
           </div>
 
-          <div className="rounded-2xl p-6 md:p-7 shadow-lg bg-deep-mint">
-            <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-4 bg-white/20">
-              <Eye className="w-5 h-5 md:w-6 md:h-6 text-on-dark" />
+          <div className="rounded-2xl p-6 md:p-7 shadow-lg border border-border bg-white">
+            <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 md:mb-4 bg-pale-blue">
+              <Eye className="w-5 h-5 md:w-6 md:h-6 text-primary" />
             </div>
-            <h3 className="font-heading font-bold text-xl md:text-[1.375rem] text-on-dark mb-2 md:mb-3">
+            <h3 className="font-heading font-bold text-xl md:text-[1.375rem] text-wordmark mb-2 md:mb-3">
               Vision
             </h3>
-            <p className="text-base leading-relaxed text-on-dark/90">{vision}</p>
+            <p className="text-base leading-relaxed text-slate">{vision}</p>
           </div>
         </div>
 

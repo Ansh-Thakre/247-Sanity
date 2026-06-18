@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Search, Bot, Zap, TrendingUp } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
+import { BookStrategyCallButton } from "@/components/ui/BookStrategyCallButton";
 import { brandVoice } from "@/config/brand";
 import { siteConfig } from "@/config/site";
 
@@ -66,14 +67,11 @@ export function HeroSection() {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-              <Button
-                href="/contact#consultation"
+              <BookStrategyCallButton
                 variant="primary"
                 size="lg"
                 icon={<ArrowRight className="w-4 h-4" />}
-              >
-                {brandVoice.ctaPrimary}
-              </Button>
+              />
               <Button href="/services" variant="outline" size="lg">
                 {brandVoice.ctaServices}
               </Button>

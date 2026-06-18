@@ -2,108 +2,21 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  Activity,
-  ArrowRight,
-  Briefcase,
-  CircleAlert,
-  FileText,
-  Globe,
-  Megaphone,
-  MessageSquare,
-  Monitor,
-  Search,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
+import { Zap } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { brandVoice } from "@/config/brand";
 import { aeoGeoFeature, servicesOverview } from "@/data/services";
-import type { ServiceOverviewItem } from "@/types/service";
+import { ServicesCurvedCarousel } from "./ServicesCurvedCarousel";
 
-const iconMap: Record<string, LucideIcon> = {
-  "circle-alert": CircleAlert,
-  monitor: Monitor,
-  activity: Activity,
-  megaphone: Megaphone,
-  search: Search,
-  "message-square": MessageSquare,
-  globe: Globe,
-  "file-text": FileText,
-  briefcase: Briefcase,
-};
-
-function ServiceBadge({ badge }: { badge: "CORE" | "NEW" }) {
-  const isNew = badge === "NEW";
-  return (
-    <span
-      className={
-        isNew
-          ? "inline-block text-[0.6875rem] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-brand-mint text-deep-navy"
-          : "inline-block text-[0.6875rem] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-pale-blue text-primary"
-      }
-    >
-      {badge}
-    </span>
-  );
-}
-
-function ServiceCard({
-  service,
-  index,
-}: {
-  service: ServiceOverviewItem;
-  index: number;
-}) {
-  const Icon = iconMap[service.icon];
-  const badge = service.badge ?? "CORE";
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.35, delay: index * 0.05 }}
-      className="h-full"
-    >
-      <Link
-        href={service.href}
-        className="group relative flex flex-col h-full min-h-[220px] sm:min-h-[240px] rounded-xl p-5 sm:p-6 border border-cloud bg-surface hover:border-primary/30 hover:shadow-[0_8px_32px_rgba(30,90,152,0.1)] transition-all duration-300"
-      >
-        <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-10">
-          <ServiceBadge badge={badge} />
-        </div>
-
-        <div className="w-11 h-11 rounded-lg bg-pale-blue flex items-center justify-center shrink-0 mb-4">
-          {Icon && <Icon className="w-5 h-5 text-primary" strokeWidth={1.75} />}
-        </div>
-
-        <h3 className="font-heading font-semibold text-wordmark text-base sm:text-lg leading-snug mb-2 pr-16 group-hover:text-primary transition-colors">
-          {service.title}
-        </h3>
-
-        <p className="text-sm text-slate leading-relaxed flex-1">
-          {service.description}
-        </p>
-
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-200">
-          Learn more
-          <ArrowRight className="w-4 h-4 shrink-0" aria-hidden />
-        </span>
-      </Link>
-    </motion.div>
-  );
-}
-
-function AeoGeoFeatureCard() {
+function AeoGeoFeatureCard({ className }: { className?: string }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, delay: 0.1 }}
-      className="mt-5 md:mt-6"
+      className={`mt-5 md:mt-6 ${className ?? ""}`}
     >
       <Link
         href={aeoGeoFeature.href}
@@ -134,13 +47,13 @@ export function ServicesOverview() {
           title="Our Services Offering"
           subtitle={brandVoice.servicesIntro}
         />
+      </Container>
 
-        <div className="mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {servicesOverview.map((service, index) => (
-            <ServiceCard key={service.title} service={service} index={index} />
-          ))}
-        </div>
+      <div className="mx-auto mt-10 w-full max-w-7xl px-4 sm:mt-12 sm:px-6 mb-12 sm:mb-14 lg:mb-20 lg:px-8">
+        <ServicesCurvedCarousel services={servicesOverview} />
+      </div>
 
+      <Container>
         <AeoGeoFeatureCard />
       </Container>
     </section>

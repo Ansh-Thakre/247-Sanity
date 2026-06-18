@@ -11,27 +11,29 @@ import {
   Send,
   ArrowRight,
   CheckCircle2,
-  MessageSquare,
   Calendar,
 } from "lucide-react";
 import { brandServiceOptions, brandVoice } from "@/config/brand";
+import { siteConfig } from "@/config/site";
+import { socials } from "@/config/socials";
 import { BrandCTA } from "@/components/ui/BrandCTA";
 import { Button } from "@/components/ui/Button";
+import { useStrategyCall } from "@/components/layout/StrategyCallPopup";
 
 const contactInfo = [
   {
     icon: Mail,
     label: "Email Us",
-    value: "hello@247digital.com",
-    href: "mailto:hello@247digital.com",
+    value: siteConfig.email,
+    href: `mailto:${siteConfig.email}`,
     color: "var(--primary)",
     bg: "var(--pale-blue)",
   },
   {
     icon: Phone,
     label: "Call Us",
-    value: "+1 (234) 567-890",
-    href: "tel:+1234567890",
+    value: siteConfig.phone,
+    href: `tel:${siteConfig.phoneTel}`,
     color: "var(--deep-mint)",
     bg: "var(--brand-mint)",
   },
@@ -62,6 +64,7 @@ const budgetRanges = [
 ];
 
 export default function ContactPage() {
+  const { openStrategyCall } = useStrategyCall();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -87,8 +90,11 @@ export default function ContactPage() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative pt-20 pb-14 md:pt-28 md:pb-20 overflow-hidden bg-surface">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(30,90,152,0.06),transparent_60%)]" />
+      <section className="relative overflow-hidden bg-linear-to-br from-pale-blue/60 via-white to-brand-mint/35 pt-20 pb-14 md:pt-28 md:pb-20">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(30,90,152,0.12),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(26,158,128,0.1),transparent_50%)]" />
+        <div className="pointer-events-none absolute -right-20 top-10 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+        <div className="pointer-events-none absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-deep-mint/10 blur-3xl" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -237,7 +243,7 @@ export default function ContactPage() {
                           type="tel"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="+1 (234) 567-890"
+                          placeholder={siteConfig.phone}
                           className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-ink placeholder:text-disabled outline-none focus:border-primary-light focus:ring-2 focus:ring-primary-light/10 transition-all"
                         />
                       </div>
@@ -341,9 +347,10 @@ export default function ContactPage() {
                   Quick Actions
                 </h3>
                 <div className="space-y-3">
-                  <Link
-                    href="/contact#consultation"
-                    className="group flex items-center gap-4 p-4 rounded-2xl bg-brand-mint/40 hover:bg-brand-mint border border-transparent hover:border-deep-mint/20 transition-all duration-300"
+                  <button
+                    type="button"
+                    onClick={() => openStrategyCall()}
+                    className="group flex items-center gap-4 p-4 rounded-2xl bg-brand-mint/40 hover:bg-brand-mint border border-transparent hover:border-deep-mint/20 transition-all duration-300 w-full text-left"
                   >
                     <div className="w-10 h-10 rounded-xl bg-deep-mint flex items-center justify-center shrink-0">
                       <Calendar className="w-5 h-5 text-white" />
@@ -353,25 +360,10 @@ export default function ContactPage() {
                       <p className="text-xs text-slate">30-min strategy session</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-deep-mint ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-
-                  <Link
-                    href="https://wa.me/1234567890"
-                    target="_blank"
-                    className="group flex items-center gap-4 p-4 rounded-2xl bg-pale-blue hover:bg-pale-blue border border-transparent hover:border-primary/20 transition-all duration-300"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0">
-                      <MessageSquare className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-ink">WhatsApp Chat</p>
-                      <p className="text-xs text-slate">Quick response guaranteed</p>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-primary ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
+                  </button>
 
                   <a
-                    href="mailto:hello@247digital.com"
+                    href={`mailto:${siteConfig.email}`}
                     className="group flex items-center gap-4 p-4 rounded-2xl bg-brand-mint hover:bg-brand-mint/80 border border-transparent hover:border-mid-mint/20 transition-all duration-300"
                   >
                     <div className="w-10 h-10 rounded-xl bg-mid-mint flex items-center justify-center shrink-0">
@@ -379,7 +371,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-ink">Email Directly</p>
-                      <p className="text-xs text-slate">hello@247digital.com</p>
+                      <p className="text-xs text-slate">{siteConfig.email}</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-mid-mint ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
                   </a>
@@ -413,33 +405,20 @@ export default function ContactPage() {
                   Follow Us
                 </h3>
                 <div className="flex gap-3">
-                  <a
-                    href="https://linkedin.com/company/247digital"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn"
-                    className="w-11 h-11 rounded-xl bg-pale-blue flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300"
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                  </a>
-                  <a
-                    href="https://twitter.com/247digital"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Twitter"
-                    className="w-11 h-11 rounded-xl bg-pale-blue flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300"
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                  </a>
-                  <a
-                    href="https://instagram.com/247digital"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram"
-                    className="w-11 h-11 rounded-xl bg-pale-blue flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                  </a>
+                  {socials.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="w-11 h-11 rounded-xl bg-pale-blue flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d={social.path} />
+                      </svg>
+                    </a>
+                  ))}
                 </div>
               </div>
             </motion.div>

@@ -14,6 +14,7 @@ import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { brandVoice } from "@/config/brand";
 import { Button } from "@/components/ui/Button";
+import { BookStrategyCallButton } from "@/components/ui/BookStrategyCallButton";
 import { getServiceBySlug } from "@/data/service-details";
 import type { ServicePanel } from "@/types/service-detail";
 
@@ -160,17 +161,11 @@ function ServicePanelCard({
 
       {isCta && (
         <div className="mt-6 flex flex-wrap gap-3 shrink-0">
-          <Button
-            href="/contact#consultation"
+          <BookStrategyCallButton
             variant="mint"
             size="md"
             icon={<ArrowRight className="w-4 h-4" />}
-          >
-            {brandVoice.ctaPrimary}
-          </Button>
-          <Button href="/portfolio" variant="outlineDark" size="md">
-            {brandVoice.ctaCaseStudies}
-          </Button>
+          />
         </div>
       )}
     </div>
@@ -383,12 +378,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
                 {service.description}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button href="/contact#consultation" variant="primary" size="lg">
-                  {brandVoice.ctaPrimary}
-                </Button>
-                <Button href="/portfolio" variant="outline" size="lg">
-                  {brandVoice.ctaCaseStudies}
-                </Button>
+                <BookStrategyCallButton variant="primary" size="lg" />
               </div>
             </motion.div>
 
@@ -683,9 +673,7 @@ export function ServicePageLayout({ slug }: ServicePageLayoutProps) {
             <Button href="/services" variant="outline" size="md">
               {brandVoice.ctaServices}
             </Button>
-            <Button href="/contact#consultation" variant="primary" size="md">
-              {brandVoice.ctaPrimary}
-            </Button>
+            <BookStrategyCallButton variant="primary" size="md" />
           </div>
         </div>
       </section>

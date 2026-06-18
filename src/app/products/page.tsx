@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Users,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import { BrandCTA } from "@/components/ui/BrandCTA";
 import { Button } from "@/components/ui/Button";
+import { useStrategyCall } from "@/components/layout/StrategyCallPopup";
 import { brandVoice } from "@/config/brand";
 import { products, type ProductItem } from "@/data/products";
 
@@ -75,10 +77,12 @@ function ProductCard({
   product,
   theme,
   index,
+  onRequestDemo,
 }: {
   product: ProductItem;
   theme: (typeof cardThemes)[number];
   index: number;
+  onRequestDemo: (product: ProductItem) => void;
 }) {
   const Icon = iconMap[product.icon];
   const isLeft = index % 2 === 0;
@@ -146,10 +150,12 @@ function ProductCard({
           </ul>
 
           <button
-            className="inline-flex items-center gap-2 font-heading font-semibold text-sm group/btn"
+            type="button"
+            onClick={() => onRequestDemo(product)}
+            className="inline-flex items-center gap-2 font-heading font-semibold text-sm group/btn transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm"
             style={{ color: theme.text }}
           >
-            Learn More
+            Request demo
             <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
           </button>
         </div>
@@ -171,9 +177,11 @@ function ProductCard({
 function ProductRow({
   items,
   rowIndex,
+  onRequestDemo,
 }: {
   items: { product: ProductItem; theme: (typeof cardThemes)[number]; globalIndex: number }[];
   rowIndex: number;
+  onRequestDemo: (product: ProductItem) => void;
 }) {
   const isReversed = rowIndex % 2 === 1;
   const [first, second] = items;
@@ -196,6 +204,7 @@ function ProductRow({
           product={first.product}
           theme={first.theme}
           index={first.globalIndex}
+          onRequestDemo={onRequestDemo}
         />
       </div>
 
@@ -209,6 +218,7 @@ function ProductRow({
             product={second.product}
             theme={second.theme}
             index={second.globalIndex}
+            onRequestDemo={onRequestDemo}
           />
         </div>
       )}
@@ -217,12 +227,23 @@ function ProductRow({
 }
 
 export default function ProductsPage() {
+  const { openStrategyCall } = useStrategyCall();
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
   const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+
+  const handleRequestDemo = (product: ProductItem) => {
+    openStrategyCall({
+      overline: product.title,
+      title: "Demo Request",
+      submitLabel: "Submit Request",
+      selectedProduct: product.title,
+      successMessage: `We'll reach out shortly to schedule your ${product.title} demo.`,
+    });
+  };
 
   const rows: { product: ProductItem; theme: (typeof cardThemes)[number]; globalIndex: number }[][] = [];
   for (let i = 0; i < products.length; i += 2) {
@@ -266,90 +287,110 @@ export default function ProductsPage() {
       {/* ========== HERO (scrolls normally) ========== */}
       <section className="relative pt-32 pb-12 sm:pt-40 sm:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-overline mb-4"
-            >
-              Products &amp; Platforms
-            </motion.p>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+            <div className="max-w-3xl">
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-overline mb-4"
+              >
+                Products &amp; Platforms
+              </motion.p>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-heading font-bold"
-              style={{
-                color: "var(--wordmark)",
-                fontSize: "clamp(2.5rem, 6vw, 4.25rem)",
-                lineHeight: 1.06,
-                letterSpacing: "-0.025em",
-              }}
-            >
-              Tools built to{" "}
-              <span className="text-primary">scale</span> your
-              <br className="hidden sm:block" /> business{" "}
-              <span style={{ color: "var(--deep-mint)" }}>effortlessly</span>
-            </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="font-heading font-bold"
+                style={{
+                  color: "var(--wordmark)",
+                  fontSize: "clamp(2.5rem, 6vw, 4.25rem)",
+                  lineHeight: 1.06,
+                  letterSpacing: "-0.025em",
+                }}
+              >
+                Tools built to{" "}
+                <span className="text-primary">scale</span> your
+                <br className="hidden sm:block" /> business{" "}
+                <span style={{ color: "var(--deep-mint)" }}>effortlessly</span>
+              </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-6 leading-relaxed max-w-2xl"
-              style={{ fontSize: "1.1875rem", color: "var(--text-secondary)" }}
-            >
-              A suite of interconnected SaaS products designed to power every
-              aspect of your business — from lead capture to final invoice.
-            </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-6 leading-relaxed max-w-2xl"
+                style={{ fontSize: "1.1875rem", color: "var(--text-secondary)" }}
+              >
+                A suite of interconnected SaaS products designed to power every
+                aspect of your business — from lead capture to final invoice.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-8 flex flex-wrap gap-4"
+              >
+                <Button
+                  href="#products"
+                  variant="primary"
+                  size="lg"
+                  icon={<ArrowRight className="w-4 h-4" />}
+                >
+                  Explore Products
+                </Button>
+                <Button href="/contact" variant="outline" size="lg">
+                  Request a Demo
+                </Button>
+              </motion.div>
+
+              {/* Stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mt-12 flex flex-wrap gap-10 sm:gap-12"
+              >
+                {[
+                  { value: "6", label: "Products" },
+                  { value: "500+", label: "Businesses Powered" },
+                  { value: "99.9%", label: "Uptime" },
+                ].map((stat) => (
+                  <div key={stat.label}>
+                    <p
+                      className="font-heading font-bold"
+                      style={{ fontSize: "2rem", color: "var(--wordmark)" }}
+                    >
+                      {stat.value}
+                    </p>
+                    <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-8 flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative mx-auto w-full max-w-xl lg:max-w-none"
             >
-              <Button
-                href="#products"
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight className="w-4 h-4" />}
-              >
-                Explore Products
-              </Button>
-              <Button href="/contact" variant="outline" size="lg">
-                Request a Demo
-              </Button>
+              <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-border bg-white shadow-[0_20px_60px_rgba(30,90,152,0.14)] sm:rounded-3xl">
+                <Image
+                  src="/images/Product page.png"
+                  alt="Business professional reviewing analytics dashboard on laptop"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 90vw, 45vw"
+                  priority
+                />
+              </div>
             </motion.div>
           </div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-16 flex flex-wrap gap-12"
-          >
-            {[
-              { value: "6", label: "Products" },
-              { value: "500+", label: "Businesses Powered" },
-              { value: "99.9%", label: "Uptime" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <p
-                  className="font-heading font-bold"
-                  style={{ fontSize: "2rem", color: "var(--wordmark)" }}
-                >
-                  {stat.value}
-                </p>
-                <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
@@ -402,7 +443,12 @@ export default function ProductsPage() {
         <div className="lg:col-span-8 xl:col-span-9 pt-4 lg:pt-0">
           <div className="flex flex-col gap-12 lg:gap-16">
             {rows.map((rowItems, rowIdx) => (
-              <ProductRow key={rowIdx} items={rowItems} rowIndex={rowIdx} />
+              <ProductRow
+                key={rowIdx}
+                items={rowItems}
+                rowIndex={rowIdx}
+                onRequestDemo={handleRequestDemo}
+              />
             ))}
           </div>
         </div>

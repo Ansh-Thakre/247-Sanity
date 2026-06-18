@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import {
+  clearIntroPreflight,
+  isIntroPreflightActive,
+} from "@/config/intro";
 
 const SERVICE_ICONS = [
   {
@@ -49,6 +54,10 @@ const SERVICE_ICONS = [
 
 const ICON_RADIUS_DESKTOP = 180;
 const ICON_RADIUS_MOBILE = 110;
+const INTRO_DURATION_MS = 4000;
+
+/** Survives React Strict Mode remounts within the same page load. */
+let introSessionStarted = false;
 
 function getCirclePosition(index: number, total: number, radius: number) {
   const angle = (index / total) * Math.PI * 2 - Math.PI / 2;
@@ -67,215 +76,221 @@ function getEntryDirection(index: number, total: number) {
   };
 }
 
-/*
-  Timeline (4s total):
-  0.0s–0.9s   Icons fly in from edges → lock into circular orbit
-  0.8s–1.6s   Logo spins in and scales up at center
-  1.6s        Logo fully visible
-  1.8s–2.3s   Icons collapse into center (behind logo), fade + scale to 0
-  2.3s–2.7s   "24/7 Digital Pro" text fades in
-  3.4s        Exit begins (scale explosion + fade)
-  4.0s        Done → homepage
-*/
-
 export function IntroAnimation({ children }: { children: React.ReactNode }) {
-  const [phase, setPhase] = useState<"intro" | "done">("intro");
+  const [introVisible, setIntroVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setPortalReady(true);
+
+    if (introSessionStarted) return;
+
+    if (!isIntroPreflightActive()) {
+      clearIntroPreflight();
+      return;
+    }
+
+    introSessionStarted = true;
     setIsMobile(window.innerWidth < 640);
-    const timer = setTimeout(() => setPhase("done"), 4000);
-    return () => clearTimeout(timer);
+    setIntroVisible(true);
+
+    const finishIntro = () => {
+      clearIntroPreflight();
+      setIntroVisible(false);
+    };
+
+    const timer = window.setTimeout(finishIntro, INTRO_DURATION_MS);
+
+    return () => window.clearTimeout(timer);
   }, []);
+
+  const handleIntroExitComplete = () => {
+    clearIntroPreflight();
+  };
 
   const radius = isMobile ? ICON_RADIUS_MOBILE : ICON_RADIUS_DESKTOP;
 
-  return (
-    <>
-      <AnimatePresence>
-        {phase === "intro" && (
-          <motion.div
-            key="intro-overlay"
-            className="fixed inset-0 z-9999 flex items-center justify-center overflow-hidden bg-surface"
-            exit={{
-              scale: 3.5,
-              opacity: 0,
-              transition: { duration: 0.6, ease: [0.65, 0, 0.35, 1] },
-            }}
-          >
-            {/* Background pulse */}
+  const introOverlay =
+    portalReady
+      ? createPortal(
+          <AnimatePresence onExitComplete={handleIntroExitComplete}>
+            {introVisible && (
             <motion.div
-              className="absolute inset-0"
-              animate={{
-                background: [
-                  "radial-gradient(circle at 50% 50%, rgba(30,90,152,0.04) 0%, transparent 70%)",
-                  "radial-gradient(circle at 50% 50%, rgba(30,90,152,0.10) 0%, transparent 70%)",
-                  "radial-gradient(circle at 50% 50%, rgba(30,90,152,0.04) 0%, transparent 70%)",
-                ],
+              key="intro-overlay"
+              className="fixed inset-0 z-9999 flex items-center justify-center overflow-hidden bg-surface"
+              exit={{
+                scale: 3.5,
+                opacity: 0,
+                transition: { duration: 0.6, ease: [0.65, 0, 0.35, 1] },
               }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Secondary glow */}
-            <motion.div
-              className="absolute w-80 h-80 sm:w-[500px] sm:h-[500px] rounded-full"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(24,196,153,0.06) 0%, transparent 70%)",
-              }}
-              animate={{ scale: [1, 1.15, 1], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Icon ring container */}
-            <div className="relative flex items-center justify-center">
-              {/* 8 service icons: fly in → orbit → collapse behind logo */}
-              {SERVICE_ICONS.map((icon, i) => {
-                const entry = getEntryDirection(i, SERVICE_ICONS.length);
-                const target = getCirclePosition(i, SERVICE_ICONS.length, radius);
-
-                return (
-                  <motion.div
-                    key={icon.label}
-                    className="absolute"
-                    initial={{ opacity: 0, scale: 0.3 }}
-                    animate={{
-                      x: [entry.x, target.x, target.x, 0],
-                      y: [entry.y, target.y, target.y, 0],
-                      opacity: [0, 1, 1, 0],
-                      scale: [0.3, 1, 1, 0],
-                    }}
-                    transition={{
-                      duration: 2.5,
-                      times: [0, 0.35, 0.72, 1],
-                      delay: i * 0.05,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <div className="flex flex-col items-center gap-1.5">
-                      <div
-                        className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg"
-                        style={{
-                          backgroundColor: `${icon.color}15`,
-                          border: `1.5px solid ${icon.color}30`,
-                        }}
-                      >
-                        <svg
-                          width={isMobile ? 20 : 26}
-                          height={isMobile ? 20 : 26}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke={icon.color}
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d={icon.path} />
-                        </svg>
-                      </div>
-                      <span
-                        className="text-[10px] sm:text-xs font-heading font-semibold tracking-wide uppercase"
-                        style={{ color: icon.color }}
-                      >
-                        {icon.label}
-                      </span>
-                    </div>
-                  </motion.div>
-                );
-              })}
-
-              {/* Central logo */}
+            >
               <motion.div
-                className="relative z-10 flex flex-col items-center"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.8,
-                  ease: [0.16, 1, 0.3, 1],
+                className="absolute inset-0"
+                animate={{
+                  background: [
+                    "radial-gradient(circle at 50% 50%, rgba(30,90,152,0.04) 0%, transparent 70%)",
+                    "radial-gradient(circle at 50% 50%, rgba(30,90,152,0.10) 0%, transparent 70%)",
+                    "radial-gradient(circle at 50% 50%, rgba(30,90,152,0.04) 0%, transparent 70%)",
+                  ],
                 }}
-              >
-                {/* Glow ring */}
-                <motion.div
-                  className="absolute -inset-5 sm:-inset-8 rounded-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle, rgba(30,90,152,0.12) 0%, transparent 70%)",
-                  }}
-                  animate={{
-                    boxShadow: [
-                      "0 0 0px rgba(30,90,152,0)",
-                      "0 0 50px rgba(30,90,152,0.2)",
-                      "0 0 0px rgba(30,90,152,0)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1.2,
-                  }}
-                />
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
 
-                {/* Rotating ring */}
-                <motion.div
-                  className="absolute -inset-6 sm:-inset-9 rounded-full border border-[#1e5a98]/15"
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  style={{ borderStyle: "dashed" }}
-                />
+              <motion.div
+                className="absolute w-80 h-80 sm:w-[500px] sm:h-[500px] rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(24,196,153,0.06) 0%, transparent 70%)",
+                }}
+                animate={{ scale: [1, 1.15, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
 
-                {/* Logo image */}
+              <div className="relative flex items-center justify-center">
+                {SERVICE_ICONS.map((icon, i) => {
+                  const entry = getEntryDirection(i, SERVICE_ICONS.length);
+                  const target = getCirclePosition(
+                    i,
+                    SERVICE_ICONS.length,
+                    radius
+                  );
+
+                  return (
+                    <motion.div
+                      key={icon.label}
+                      className="absolute"
+                      initial={{ opacity: 0, scale: 0.3 }}
+                      animate={{
+                        x: [entry.x, target.x, target.x, 0],
+                        y: [entry.y, target.y, target.y, 0],
+                        opacity: [0, 1, 1, 0],
+                        scale: [0.3, 1, 1, 0],
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        times: [0, 0.35, 0.72, 1],
+                        delay: i * 0.05,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <div className="flex flex-col items-center gap-1.5">
+                        <div
+                          className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg"
+                          style={{
+                            backgroundColor: `${icon.color}15`,
+                            border: `1.5px solid ${icon.color}30`,
+                          }}
+                        >
+                          <svg
+                            width={isMobile ? 20 : 26}
+                            height={isMobile ? 20 : 26}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke={icon.color}
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d={icon.path} />
+                          </svg>
+                        </div>
+                        <span
+                          className="text-[10px] sm:text-xs font-heading font-semibold tracking-wide uppercase"
+                          style={{ color: icon.color }}
+                        >
+                          {icon.label}
+                        </span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+
                 <motion.div
-                  initial={{ rotate: -180, scale: 0 }}
-                  animate={{ rotate: 0, scale: 1 }}
+                  className="relative z-10 flex flex-col items-center"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
                   transition={{
-                    duration: 0.8,
-                    delay: 0.9,
+                    duration: 0.7,
+                    delay: 0.8,
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 >
-                  <Image
-                    src="/icon-247.png"
-                    alt="247 Digital Pro"
-                    width={96}
-                    height={96}
-                    className="w-20 h-20 sm:w-24 sm:h-24 object-contain"
-                    priority
+                  <motion.div
+                    className="absolute -inset-5 sm:-inset-8 rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(30,90,152,0.12) 0%, transparent 70%)",
+                    }}
+                    animate={{
+                      boxShadow: [
+                        "0 0 0px rgba(30,90,152,0)",
+                        "0 0 50px rgba(30,90,152,0.2)",
+                        "0 0 0px rgba(30,90,152,0)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1.2,
+                    }}
                   />
+
+                  <motion.div
+                    className="absolute -inset-6 sm:-inset-9 rounded-full border border-[#1e5a98]/15"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    style={{ borderStyle: "dashed" }}
+                  />
+
+                  <motion.div
+                    initial={{ rotate: -180, scale: 0 }}
+                    animate={{ rotate: 0, scale: 1 }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.9,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                  >
+                    <Image
+                      src="/icon-247.png"
+                      alt="247 Digital Pro"
+                      width={96}
+                      height={96}
+                      className="w-20 h-20 sm:w-24 sm:h-24 object-contain"
+                      priority
+                    />
+                  </motion.div>
                 </motion.div>
-              </motion.div>
 
-              {/* "24/7 Digital Pro" text — appears when icons collapse */}
-              <motion.div
-                className="absolute"
-                style={{ top: isMobile ? 60 : 76 }}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: isMobile ? 50 : 60 }}
-                transition={{ duration: 0.5, delay: 2.2, ease: "easeOut" }}
-              >
-                <p className="font-heading font-bold text-wordmark text-base sm:text-xl tracking-tight whitespace-nowrap">
-                  247{" "}
-                  <span className="text-primary">Digital Pro</span>
-                </p>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <motion.div
+                  className="absolute"
+                  style={{ top: isMobile ? 60 : 76 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: isMobile ? 50 : 60 }}
+                  transition={{ duration: 0.5, delay: 2.2, ease: "easeOut" }}
+                >
+                  <p className="font-heading font-bold text-wordmark text-base sm:text-xl tracking-tight whitespace-nowrap">
+                    247 <span className="text-primary">Digital Pro</span>
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )
+      : null;
 
-      {/* Actual page content */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: phase === "done" ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        {children}
-      </motion.div>
+  return (
+    <>
+      {introOverlay}
+      {children}
     </>
   );
 }
