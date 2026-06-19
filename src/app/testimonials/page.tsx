@@ -1,8 +1,13 @@
 ﻿import { TestimonialsSection } from "@/components/sections/home/TestimonialsSection";
 import { BrandedPageHero } from "@/components/layout/BrandedPageHero";
 import { BrandCTA } from "@/components/ui/BrandCTA";
+import { getTestimonials } from "@/sanity/fetch";
 
-export default function TestimonialsPage() {
+export const revalidate = 60;
+
+export default async function TestimonialsPage() {
+  const testimonials = await getTestimonials();
+
   return (
     <main>
       <BrandedPageHero
@@ -14,7 +19,7 @@ export default function TestimonialsPage() {
         }
         description="Partners who value reliability, transparency, and ROI-focused marketing systems."
       />
-      <TestimonialsSection />
+      <TestimonialsSection testimonials={testimonials} />
       <BrandCTA />
     </main>
   );

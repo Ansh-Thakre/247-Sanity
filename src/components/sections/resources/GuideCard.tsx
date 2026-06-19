@@ -51,7 +51,7 @@ export function GuideCard({ guide, className, onOpen }: GuideCardProps) {
       </div>
 
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors">
+        <h3 className="text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2">
           {guide.title}
         </h3>
         <p className="text-sm text-slate leading-relaxed flex-1 line-clamp-3">

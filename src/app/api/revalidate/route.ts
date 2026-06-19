@@ -4,6 +4,7 @@ import {parseBody} from 'next-sanity/webhook'
 
 type WebhookPayload = {
   _type?: string
+  slug?: {current?: string}
 }
 
 export async function POST(req: NextRequest) {
@@ -18,8 +19,24 @@ export async function POST(req: NextRequest) {
       return new Response('Invalid signature', {status: 401})
     }
 
-    if (body?._type === 'aboutPage') {
-      revalidatePath('/about')
+    const slug = body?.slug?.current
+
+    switch (body?._type) {
+      case 'aboutPage':
+        revalidatePath('/about')
+        break
+      case 'testimonial':
+        revalidatePath('/')
+        revalidatePath('/testimonials')
+        break
+      case 'post':
+        revalidatePath('/')
+        revalidatePath('/resources/blog')
+        if (slug) revalidatePath(`/resources/blog/${slug}`)
+        break
+      case 'guide':
+        revalidatePath('/resources/guides')
+        break
     }
 
     return NextResponse.json({revalidated: true, now: Date.now()})

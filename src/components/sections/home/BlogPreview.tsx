@@ -6,9 +6,13 @@ import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { BlogCard } from "@/components/sections/resources/BlogCard";
-import { latestPosts } from "@/data/blog-posts";
+import type { BlogPostPreview } from "@/data/blog-posts";
 
-export function BlogPreview() {
+interface BlogPreviewProps {
+  posts: BlogPostPreview[];
+}
+
+export function BlogPreview({ posts }: BlogPreviewProps) {
   return (
     <section className="py-16 md:py-24">
       <Container>
@@ -19,7 +23,7 @@ export function BlogPreview() {
         />
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
-          {latestPosts.map((post, i) => (
+          {posts.map((post, i) => (
             <motion.div
               key={post.slug}
               initial={{ opacity: 0, y: 20 }}
@@ -36,8 +40,8 @@ export function BlogPreview() {
               <BlogCard
                 post={post}
                 className="hover:shadow-none hover:border-border"
-                titleClassName="text-base"
-                excerptClassName="line-clamp-none"
+                titleClassName="text-base line-clamp-2"
+                excerptClassName="line-clamp-2"
               />
             </motion.div>
           ))}

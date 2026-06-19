@@ -12,6 +12,9 @@ import {
   IntroAnimation,
 } from "@/components/sections/home";
 import { Container } from "@/components/layout/Container";
+import { getHomepageBlogPosts, getTestimonials } from "@/sanity/fetch";
+
+export const revalidate = 60;
 
 function SectionSeparator() {
   return (
@@ -21,7 +24,12 @@ function SectionSeparator() {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const [testimonials, latestPosts] = await Promise.all([
+    getTestimonials(),
+    getHomepageBlogPosts(),
+  ]);
+
   return (
     <IntroAnimation>
       <HeroSection />
@@ -38,9 +46,9 @@ export default function Home() {
       <SectionSeparator />
       <PortfolioShowcase />
       <SectionSeparator />
-      <TestimonialsSection />
+      <TestimonialsSection testimonials={testimonials} />
       <SectionSeparator />
-      <BlogPreview />
+      <BlogPreview posts={latestPosts} />
       <SectionSeparator />
       <CTASection />
     </IntroAnimation>

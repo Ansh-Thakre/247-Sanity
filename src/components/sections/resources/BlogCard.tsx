@@ -65,7 +65,7 @@ export function BlogCard({
       <div className="p-5 flex flex-col flex-1">
         <h3
           className={cn(
-            "text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors",
+            "text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2",
             titleClassName
           )}
         >
