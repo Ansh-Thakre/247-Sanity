@@ -49,7 +49,7 @@ export function BlogCard({
         {showImage && (
           <Image
             src={post.image}
-            alt=""
+            alt={post.title}
             fill
             className="object-cover object-center"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -65,7 +65,7 @@ export function BlogCard({
       <div className="p-5 flex flex-col flex-1">
         <h3
           className={cn(
-            "text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2",
+            "text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2 break-words",
             titleClassName
           )}
         >

@@ -9,6 +9,7 @@ import { brandVoice } from "@/config/brand";
 import { BrandCTA } from "@/components/ui/BrandCTA";
 import { Container } from "@/components/layout/Container";
 import { portfolioProjects, type PortfolioProject } from "@/data/portfolio";
+import { MarketingPortfolioSection } from "@/components/portfolio/MarketingPortfolioSection";
 
 function PortfolioCard({
   project,
@@ -164,6 +165,8 @@ export default function PortfolioPage() {
           </div>
         </Container>
       </section>
+
+      <MarketingPortfolioSection />
 
       <BrandCTA
         title="Not sure where to start?"

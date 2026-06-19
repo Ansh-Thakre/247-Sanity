@@ -163,10 +163,7 @@ function getPage(page: number, testimonials: Testimonial[]) {
   const safePage = page % totalPages;
   const start = safePage * CARDS_PER_PAGE;
   const items = testimonials.slice(start, start + CARDS_PER_PAGE);
-  while (items.length < CARDS_PER_PAGE && testimonials.length > 0) {
-    items.push(testimonials[items.length % testimonials.length]);
-  }
-  return { left: [items[0], items[1]], right: [items[2], items[3]] };
+  return {left: items.slice(0, 2), right: items.slice(2, 4)};
 }
 
 function DesktopLayout({ testimonials }: { testimonials: Testimonial[] }) {

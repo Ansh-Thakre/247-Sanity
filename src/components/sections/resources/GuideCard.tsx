@@ -37,7 +37,7 @@ export function GuideCard({ guide, className, onOpen }: GuideCardProps) {
         {showImage && (
           <Image
             src={guide.image}
-            alt=""
+            alt={guide.title}
             fill
             className="object-cover object-center"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -51,7 +51,7 @@ export function GuideCard({ guide, className, onOpen }: GuideCardProps) {
       </div>
 
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2">
+        <h3 className="text-base sm:text-lg font-heading font-semibold text-ink leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2 break-words">
           {guide.title}
         </h3>
         <p className="text-sm text-slate leading-relaxed flex-1 line-clamp-3">

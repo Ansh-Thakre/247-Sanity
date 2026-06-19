@@ -1,4 +1,4 @@
-import {client} from './client'
+import {client, isCmsConfigured} from './client'
 import {
   BLOG_CARD_GRADIENT,
   blogPosts as fallbackBlogPosts,
@@ -18,7 +18,7 @@ import {
   getDefaultAboutPage,
   type AboutPageContent,
 } from './defaults'
-import {resolveImageUrl} from './resolve-image'
+import {resolveCardImageUrl, resolveDetailImageUrl} from './resolve-image'
 import {
   ABOUT_PAGE_QUERY,
   BLOG_POST_BY_SLUG_QUERY,
@@ -52,6 +52,11 @@ type SanityBlogPost = {
   author?: string
   mainImage?: unknown
   content?: Array<{heading?: string; paragraphs?: string[]}>
+}
+
+export type MappedBlogPost = BlogPost & {
+  cardImage: string
+  detailImage: string
 }
 
 type SanityGuide = {
@@ -88,13 +93,18 @@ function mapTestimonial(doc: SanityTestimonial): Testimonial | null {
   }
 }
 
-function mapBlogPost(doc: SanityBlogPost, fallbackImage = ''): BlogPost | null {
+function mapBlogPost(doc: SanityBlogPost): MappedBlogPost | null {
   if (!doc.title || !doc.slug) return null
 
   const staticMatch = fallbackBlogPosts.find((p) => p.slug === doc.slug)
-  const image = resolveImageUrl(
-    doc.mainImage as Parameters<typeof resolveImageUrl>[0],
-    staticMatch?.image ?? fallbackImage,
+  const fallback = staticMatch?.image ?? ''
+  const cardImage = resolveCardImageUrl(
+    doc.mainImage as Parameters<typeof resolveCardImageUrl>[0],
+    fallback,
+  )
+  const detailImage = resolveDetailImageUrl(
+    doc.mainImage as Parameters<typeof resolveDetailImageUrl>[0],
+    cardImage || fallback,
   )
 
   return {
@@ -105,7 +115,9 @@ function mapBlogPost(doc: SanityBlogPost, fallbackImage = ''): BlogPost | null {
     slug: doc.slug,
     readTime: doc.readTime ?? '',
     gradient: BLOG_CARD_GRADIENT,
-    image,
+    image: cardImage,
+    cardImage,
+    detailImage,
     author: doc.author ?? '247 Digital Pro Team',
     content: (doc.content ?? []).map((section) => ({
       heading: section.heading,
@@ -118,8 +130,8 @@ function mapGuide(doc: SanityGuide): GuidePreview | null {
   if (!doc.title || !doc.slug) return null
 
   const staticMatch = fallbackGuides.find((g) => g.slug === doc.slug)
-  const image = resolveImageUrl(
-    doc.coverImage as Parameters<typeof resolveImageUrl>[0],
+  const image = resolveCardImageUrl(
+    doc.coverImage as Parameters<typeof resolveCardImageUrl>[0],
     staticMatch?.image ?? '',
   )
 
@@ -183,6 +195,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     .map(mapTestimonial)
     .filter((item): item is Testimonial => item !== null)
 
+  if (isCmsConfigured) return mapped
   return mapped.length > 0 ? mapped : fallbackTestimonials
 }
 
@@ -193,16 +206,14 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     fetchOptions,
   )) as SanityBlogPost[] | null
 
-  if (!data || data.length === 0) {
-    return fallbackBlogPosts
-  }
-
-  return data
+  const mapped = (data ?? [])
     .map((doc) => mapBlogPost(doc))
-    .filter((item): item is BlogPost => item !== null)
+    .filter((item): item is MappedBlogPost => item !== null)
+
+  if (isCmsConfigured) return mapped
+  return mapped.length > 0 ? mapped : fallbackBlogPosts
 }
 
-/** Posts flagged "Show on homepage" in Studio (max 3). */
 export async function getHomepageBlogPosts(): Promise<BlogPostPreview[]> {
   const data = (await client.fetch(
     HOMEPAGE_BLOG_POSTS_QUERY,
@@ -212,14 +223,13 @@ export async function getHomepageBlogPosts(): Promise<BlogPostPreview[]> {
 
   const mapped = (data ?? [])
     .map((doc) => mapBlogPost(doc))
-    .filter((item): item is BlogPost => item !== null)
+    .filter((item): item is MappedBlogPost => item !== null)
 
-  if (mapped.length > 0) return mapped
-
-  return fallbackBlogPosts.slice(0, 3)
+  if (isCmsConfigured) return mapped
+  return mapped.length > 0 ? mapped : fallbackBlogPosts.slice(0, 3)
 }
 
-export async function getLatestBlogPosts(limit = 3): Promise<BlogPostPreview[]> {
+export async function getLatestBlogPosts(): Promise<BlogPostPreview[]> {
   return getHomepageBlogPosts()
 }
 
@@ -234,12 +244,11 @@ export async function getAllBlogSlugs(): Promise<string[]> {
     .map((item) => item.slug)
     .filter((slug): slug is string => Boolean(slug))
 
-  if (cmsSlugs.length > 0) return cmsSlugs
-
-  return fallbackBlogPosts.map((post) => post.slug)
+  if (isCmsConfigured) return cmsSlugs
+  return cmsSlugs.length > 0 ? cmsSlugs : fallbackBlogPosts.map((post) => post.slug)
 }
 
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+export async function getBlogPostBySlug(slug: string): Promise<MappedBlogPost | undefined> {
   const data = (await client.fetch(
     BLOG_POST_BY_SLUG_QUERY,
     {slug},
@@ -249,7 +258,17 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefi
   const mapped = data ? mapBlogPost(data) : null
   if (mapped) return mapped
 
-  return fallbackBlogPosts.find((post) => post.slug === slug)
+  if (!isCmsConfigured) {
+    const fallback = fallbackBlogPosts.find((post) => post.slug === slug)
+    if (!fallback) return undefined
+    return {
+      ...fallback,
+      cardImage: fallback.image,
+      detailImage: fallback.image,
+    }
+  }
+
+  return undefined
 }
 
 export async function getGuides(): Promise<GuidePreview[]> {
@@ -263,5 +282,6 @@ export async function getGuides(): Promise<GuidePreview[]> {
     .map(mapGuide)
     .filter((item): item is GuidePreview => item !== null)
 
+  if (isCmsConfigured) return mapped
   return mapped.length > 0 ? mapped : fallbackGuides
 }

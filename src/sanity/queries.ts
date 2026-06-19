@@ -78,7 +78,7 @@ export const BLOG_POST_BY_SLUG_QUERY = defineQuery(`*[_type == "post" && slug.cu
 
 export const BLOG_SLUGS_QUERY = defineQuery(`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`)
 
-export const GUIDES_QUERY = defineQuery(`*[_type == "guide"] | order(_createdAt desc) {
+export const GUIDES_QUERY = defineQuery(`*[_type == "guide" && defined(slug.current)] | order(_createdAt desc) {
   title,
   "slug": slug.current,
   excerpt,

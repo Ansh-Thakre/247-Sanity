@@ -79,7 +79,7 @@ export function GuideDetailModal({ guide, onClose }: GuideDetailModalProps) {
                     </div>
                     <h2
                       id="guide-modal-title"
-                      className="font-heading font-bold text-lg sm:text-xl leading-snug pr-2"
+                      className="font-heading font-bold text-lg sm:text-xl leading-snug pr-2 break-words"
                     >
                       {guide.title}
                     </h2>
@@ -120,10 +120,10 @@ export function GuideDetailModal({ guide, onClose }: GuideDetailModalProps) {
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <div className="min-w-0">
-                        <h3 className="font-heading font-semibold text-ink text-sm sm:text-base mb-1">
+                        <h3 className="font-heading font-semibold text-ink text-sm sm:text-base mb-1 break-words">
                           {step.title}
                         </h3>
-                        <p className="text-sm text-slate leading-relaxed">
+                        <p className="text-sm text-slate leading-relaxed break-words">
                           {step.description}
                         </p>
                       </div>

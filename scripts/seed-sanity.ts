@@ -1,5 +1,5 @@
-import {readFileSync} from 'fs'
-import {resolve} from 'path'
+import {createReadStream, existsSync, readFileSync} from 'fs'
+import {basename, join, resolve} from 'path'
 import {createClient} from 'next-sanity'
 import {blogPosts} from '../src/data/blog-posts'
 import {allGuides} from '../src/data/guides'
@@ -48,6 +48,45 @@ const client = createClient({
   useCdn: false,
 })
 
+async function uploadLocalImage(relativePath: string) {
+  const filePath = join(process.cwd(), 'public', relativePath.replace(/^\//, ''))
+  if (!existsSync(filePath)) {
+    console.warn(`  Skipping missing image: ${filePath}`)
+    return undefined
+  }
+
+  const asset = await client.assets.upload('image', createReadStream(filePath), {
+    filename: basename(filePath),
+  })
+
+  return {
+    _type: 'image' as const,
+    asset: {
+      _type: 'reference' as const,
+      _ref: asset._id,
+    },
+  }
+}
+
+async function uploadRemoteImage(url: string, filename: string) {
+  const response = await fetch(url)
+  if (!response.ok) {
+    console.warn(`  Skipping remote image (${response.status}): ${url}`)
+    return undefined
+  }
+
+  const buffer = Buffer.from(await response.arrayBuffer())
+  const asset = await client.assets.upload('image', buffer, {filename})
+
+  return {
+    _type: 'image' as const,
+    asset: {
+      _type: 'reference' as const,
+      _ref: asset._id,
+    },
+  }
+}
+
 async function main() {
   const aboutPage = getDefaultAboutPage()
 
@@ -75,6 +114,11 @@ async function main() {
   console.log(`Seeded ${testimonials.length} testimonials.`)
 
   for (const [index, post] of blogPosts.entries()) {
+    console.log(`Uploading image for: ${post.title}`)
+    const mainImage = post.image.startsWith('http')
+      ? await uploadRemoteImage(post.image, `${post.slug}.jpg`)
+      : await uploadLocalImage(post.image)
+
     await client.createOrReplace({
       _id: `post-${post.slug}`,
       _type: 'post',
@@ -87,17 +131,23 @@ async function main() {
       author: post.author,
       showOnHomepage: index < 3,
       homepageOrder: index < 3 ? index + 1 : undefined,
-      content: post.content.map((section) => ({
+      ...(mainImage ? {mainImage} : {}),
+      content: post.content.map((section, sectionIndex) => ({
         _type: 'contentSection',
-        _key: section.heading ?? section.paragraphs[0]?.slice(0, 24) ?? 'section',
+        _key: `section-${sectionIndex}`,
         heading: section.heading,
         paragraphs: section.paragraphs,
       })),
     })
   }
-  console.log(`Seeded ${blogPosts.length} blog posts (upload cover images in Studio).`)
+  console.log(`Seeded ${blogPosts.length} blog posts with images.`)
 
   for (const guide of allGuides) {
+    console.log(`Uploading image for guide: ${guide.title}`)
+    const coverImage = guide.image.startsWith('http')
+      ? await uploadRemoteImage(guide.image, `${guide.slug}.jpg`)
+      : await uploadLocalImage(guide.image)
+
     await client.createOrReplace({
       _id: `guide-${guide.slug}`,
       _type: 'guide',
@@ -107,17 +157,18 @@ async function main() {
       category: guide.category,
       readTime: guide.readTime,
       difficulty: guide.difficulty,
-      stepItems: guide.stepItems.map((step, index) => ({
+      ...(coverImage ? {coverImage} : {}),
+      stepItems: guide.stepItems.map((step, stepIndex) => ({
         _type: 'guideStep',
-        _key: `step-${index}`,
+        _key: `step-${stepIndex}`,
         title: step.title,
         description: step.description,
       })),
     })
   }
-  console.log(`Seeded ${allGuides.length} guides (upload cover images in Studio).`)
+  console.log(`Seeded ${allGuides.length} guides with images.`)
 
-  console.log('Done. Open Studio to review, add images, and publish.')
+  console.log('Done. Open Studio → Publish any drafts.')
 }
 
 main().catch((error) => {
