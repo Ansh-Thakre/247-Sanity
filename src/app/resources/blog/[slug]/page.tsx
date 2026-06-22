@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock, User } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { BrandCTA } from "@/components/ui/BrandCTA";
-import { BLOG_CARD_GRADIENT } from "@/data/blog-posts";
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/sanity/fetch";
 import { siteConfig } from "@/config/site";
 
@@ -40,79 +39,41 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getBlogPostBySlug(slug);
   if (!post) notFound();
 
-  const formattedDate = post.date
-    ? new Date(post.date).toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      })
-    : "";
-
   const heroImage = post.detailImage || post.image;
 
   return (
     <>
-      <section
-        className={`relative pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden bg-linear-to-br ${BLOG_CARD_GRADIENT}`}
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08),transparent_60%)]" />
-        <Container className="relative z-10 max-w-4xl">
-          <Link
-            href="/resources/blog"
-            className="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Blog
-          </Link>
+      {/* Option 1: solid teal left, featured image blending on the right, centered title + excerpt */}
+      <section className="relative min-h-[min(52vw,22rem)] sm:min-h-[min(42vw,24rem)] md:min-h-[20rem] lg:min-h-[22rem] pt-20 md:pt-24 overflow-hidden bg-deep-mint">
+        {heroImage && (
+          <div className="absolute inset-y-0 right-0 w-[78%] sm:w-[62%] md:w-[58%] lg:w-[55%]">
+            <Image
+              src={heroImage}
+              alt=""
+              fill
+              className="object-cover object-[65%_center] sm:object-center"
+              sizes="(max-width: 640px) 78vw, 55vw"
+              priority
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0 bg-linear-to-r from-deep-mint from-0% via-deep-mint/90 via-22% sm:via-deep-mint/75 sm:via-28% to-transparent to-68% sm:to-72%"
+              aria-hidden
+            />
+          </div>
+        )}
 
-          <span className="inline-block px-3 py-1 rounded-full bg-white/20 text-xs font-medium text-white backdrop-blur-sm mb-4">
-            {post.category}
-          </span>
-          <h1 className="font-heading font-bold text-white text-[clamp(1.75rem,4.5vw,2.75rem)] leading-[1.15] tracking-tight break-words text-balance">
-            {post.title}
-          </h1>
-          <p className="mt-4 text-base sm:text-lg text-white/85 leading-relaxed break-words">
-            {post.excerpt}
-          </p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-6 text-sm text-white/75">
-            <span className="flex items-center gap-1.5">
-              <User className="w-4 h-4 shrink-0" />
-              {post.author}
-            </span>
-            {formattedDate && (
-              <>
-                <span className="hidden sm:inline w-1 h-1 rounded-full bg-white/40" />
-                <span>{formattedDate}</span>
-              </>
-            )}
-            <span className="hidden sm:inline w-1 h-1 rounded-full bg-white/40" />
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 shrink-0" />
-              {post.readTime}
-            </span>
+        <Container className="relative z-10 flex min-h-[min(52vw,22rem)] sm:min-h-[min(42vw,24rem)] md:min-h-[20rem] lg:min-h-[22rem] items-center justify-center px-4 py-10 md:py-14">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="font-heading font-bold text-white text-[clamp(1.75rem,4.5vw,2.75rem)] leading-[1.15] tracking-tight break-words text-balance">
+              {post.title}
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-white/90 leading-relaxed break-words text-pretty max-w-2xl mx-auto">
+              {post.excerpt}
+            </p>
           </div>
         </Container>
       </section>
-
-      {heroImage && (
-        <section className="relative z-10 -mt-6 md:-mt-8 pb-8 md:pb-10 bg-surface">
-          <Container>
-            <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-white p-3 sm:p-4 shadow-[0_8px_40px_rgba(30,90,152,0.1)] overflow-hidden">
-              <div className="flex items-center justify-center w-full min-h-[12rem] max-h-[min(70vh,32rem)] bg-surface/60 rounded-xl overflow-hidden">
-                <Image
-                  src={heroImage}
-                  alt={post.title}
-                  width={1600}
-                  height={900}
-                  className="w-full h-auto max-h-[min(70vh,32rem)] object-contain object-center"
-                  sizes="(max-width: 1024px) 100vw, 896px"
-                  priority
-                />
-              </div>
-            </div>
-          </Container>
-        </section>
-      )}
 
       <section className="relative py-8 md:py-12 bg-surface">
         <div className="absolute inset-0 pointer-events-none">
